@@ -1,0 +1,6 @@
+{
+    "mongoConfig": {
+      "serverUrl": "mongodb+srv://city:cityscan@cityscanner.uhcyu36.mongodb.net/test",
+      "database": "CityScanner"
+    }
+}
