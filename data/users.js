@@ -1,5 +1,6 @@
 const helperFunc = require("../helpers");
 const mongoCollections = require("../config/mongoCollections");
+const user_collection= mongoCollections.users;
 const { ObjectId } = require("mongodb");
 
 const createUser = async (name, username, email, age, password, attractions, reviews, comments) => {
@@ -26,6 +27,14 @@ const createUser = async (name, username, email, age, password, attractions, rev
         comments: comments,
     };
 
+    const list = await userCollection.find({}, {projection: {_id: 0, username: 1}}).toArray();
+    for(let i=0; i<list.length; i++){
+    if(list[i]["username"].toLowerCase() == username.toLowerCase())throw "Username already exists"
+    }
+
+    const saltRounds = 10;
+    password =  await bcrypt.hash(password, saltRounds);
+
     const insertInfo = await userCollection.insertOne(newUser);
     if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add a record into users";
     const newId = insertInfo.insertedId.toString();
@@ -35,6 +44,43 @@ const createUser = async (name, username, email, age, password, attractions, rev
     return returnObj;
 };
 
+const checkUser = async (username, password) => {
+
+   if(typeof username == 'undefined') throw "Please enter the username"
+   if(typeof password == 'undefined') throw "Please enter the password"
+   if(typeof username != 'string' || typeof password != 'string') throw "Id and password must be string"
+   if(username.trim().length < 4) throw "username should have more than 4 characters"
+   if(password.trim().length < 6) throw "passwored should have more than 6 characters"
+   if(/\s/.test(username) || /\s/.test(password)) throw "username & password cannot have empty spaces"
+   if(username.trim().length === 0 || password.trim().length === 0) throw "username or password cannot be empty spaces"
+   
+   username = username.toLowerCase();
+
+   let alphaNum = /^[A-Za-z0-9]+$/;
+   if(!username.match(alphaNum)) throw "username can only be alpha-numeric"
+  
+  let passwordConstaints = /^(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?-]{6,}$/
+  
+  if(!password.match(passwordConstaints)) throw "password should contain atleast an uppercase letter, a special character and a number and should be minimum 6 characters long"
+
+  const userCollection = await user_collection() 
+  const usernameFound =  await userCollection.findOne({username: username});
+
+  if(!usernameFound) throw "Either the username or password is invalid"
+  
+  if(usernameFound) {
+    comparePassword = await bcrypt.compare(password, usernameFound.password);
+  }
+
+  if(comparePassword) {
+   return {authenticatedUser: true}
+  }else{
+   throw "Either the username or password is invalid"
+  }
+
+};
+
 module.exports = {
     createUser,
+    checkUser
 };
