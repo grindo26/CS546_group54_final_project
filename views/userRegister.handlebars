@@ -11,3 +11,20 @@ You should have a label for both the username and password inputs referencing th
 You will also have a link on this page that links to '/' and has the text "Already have an account? Click here to log-in"
 
 --}}
+
+<p>{{error}}</p>
+    <p> Enter a username and password to sign up </p>
+    <form method="POST" action="/register" id="registration-form"> 
+    <label for="nameInput"> Name:</label><br>
+    <input type="text" id="nameInput" name="nameInput"><br>
+    <label for="ageInput"> Age:</label><br>
+    <input type="text" id="ageInput" name="ageInput"><br>
+    <label for="usernameInput"> Username:</label><br>
+    <label for="emailInput"> Email:</label><br>
+    <input type="text" id="emailInput" name="emailInput"><br>
+    <label for="passwordInput"> Password: </label><br>
+    <input type="password" id="passwordInput" name="passwordInput"><br>
+    <button type="submit">Register</button>
+    </form>
+
+<a href="/">Already have an account? Click here to log-in</a>
