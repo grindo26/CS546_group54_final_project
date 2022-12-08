@@ -33,6 +33,21 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
     return returnObj;
 };
 
+const getAllAttraction = async (cityId) => {
+    // if (!movieId) throw 'You must provide an movieId to search for';
+    // if (typeof movieId !== 'string') throw 'movieId must be a string';
+    // if (movieId.trim().length === 0)
+    //   throw 'movieId cannot be an empty string or just spaces';
+    // movieId = movieId.trim();
+    // if (!ObjectId.isValid(movieId)) throw 'invalid object ID';
+  
+    const attrCollection = await mongoCollections.attractions();
+   const attrList = await  attrCollection.findOne({_id: ObjectId(cityId)}, 
+   {projection: {_id: 0, attractions: 1} });
+   return attrList;
+   
+};
+
 module.exports = {
-    createAttraction,
+    createAttraction, getAllAttraction
 };
