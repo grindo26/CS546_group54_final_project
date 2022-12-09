@@ -9,6 +9,7 @@ const homeRoutes = require("./home");
 const logoutRoutes = require("./logout");
 
 const constructorMethod = (app) => {
+    app.use("/", homeRoutes);
     app.use("/signUp", signUpRoutes);
     app.use("/reviews", reviewsRoutes);
     app.use("/user", userRoutes);
@@ -16,7 +17,6 @@ const constructorMethod = (app) => {
     app.use("/login", loginRoutes);
     app.use("/attractions", attractionsRoutes);
     app.use("/search", searchRoutes);
-    app.use("/home", homeRoutes);
     app.use("/logout", logoutRoutes);
     app.use("*", (req, res) => {
         res.sendStatus(404);

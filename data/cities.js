@@ -31,6 +31,9 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     return returnObj;
 };
 
+
+
+
 module.exports = {
-    createCity,
+    createCity
 };

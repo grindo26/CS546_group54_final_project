@@ -45,13 +45,25 @@ const getAllAttraction = async (cityId) => {
     // movieId = movieId.trim();
     // if (!ObjectId.isValid(movieId)) throw 'invalid object ID';
   
-    const attrCollection = await mongoCollections.attractions();
+   const attrCollection = await mongoCollections.attractions();
    const attrList = await  attrCollection.findOne({_id: ObjectId(cityId)}, 
    {projection: {_id: 0, attractions: 1} });
    return attrList;
    
 };
 
+const getAttractionById = async (attractionId) => {
+
+    newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
+    
+    const attractionCollection = await mongoCollections.attractions();
+    const attractionList = await attractionCollection.findOne({_id : ObjectId(attractionId)});
+    if (!attractionList) throw "Attractions doesn't exist with the given city name";
+    return ans;
+   };
+
+
+
 module.exports = {
-    createAttraction, getAllAttraction
+    createAttraction, getAllAttraction, getAttractionById
 };
