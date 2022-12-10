@@ -1,13 +1,12 @@
-// Setup server, session and middleware here.
-
-//here is where you'll set up your server as shown in lecture code.
 const express = require("express");
 const app = express();
 const configRoutes = require("./routes");
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const static = express.static(__dirname + '/public');
 
 app.use(express.json());
+app.use('/public', static);
 
 app.use(session({
     name: 'AuthCookie',
