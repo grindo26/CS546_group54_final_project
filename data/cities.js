@@ -31,9 +31,14 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     return returnObj;
 };
 
-
+const getCityById = async (cityId) => {
+const cityCollection = await mongoCollections.cities();
+const city = await cityCollection.findOne({_id: ObjectId(cityId)});
+return city;
+    
+   };
 
 
 module.exports = {
-    createCity
+    createCity,getCityById
 };

@@ -46,14 +46,14 @@ const getAllAttraction = async (cityId) => {
     // if (!ObjectId.isValid(movieId)) throw 'invalid object ID';
   
    const attrCollection = await mongoCollections.attractions();
-   const attrList = await  attrCollection.findOne({_id: ObjectId(cityId)}, 
-   {projection: {_id: 0, attractions: 1} });
+//    console.log(cityId)
+   const attrList = await attrCollection.find({ cityId:cityId }).toArray()
    return attrList;
    
 };
 
 const getAttractionById = async (attractionId) => {
-
+    console.log(attractionId)
     newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
     
     const attractionCollection = await mongoCollections.attractions();
