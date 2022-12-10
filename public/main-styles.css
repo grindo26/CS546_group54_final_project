@@ -1,0 +1,99 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+  background: slateblue;
+  margin: 0%;
+  padding: 0%;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+
+
+main {
+	max-width: 75%;
+	margin: auto;
+}
+
+header {
+	border-bottom: 1px solid #afafaf;
+}
+
+h1,
+h2 {
+	color: #222;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+label {
+	font-weight: bold;
+}
+
+form{
+    background-color: rgb(227, 232, 182);
+}
+.button {
+    background-color: #590245;
+  
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+  
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+
+p {
+	font-size: 1rem;
+	line-height: 2;
+}
+
+dl{
+    background-color: rgb(117, 117, 227);
+  }
+  dt{
+    color: black;
+  }
+  dd{
+    color:black;
+  }
+  ul{
+    background-color:orange;
+  }
+  li{
+    color:honeydew;
+  }
+  .inli{
+    color:white;
+  }
+
+  a{
+    color:rgb(227, 232, 182);
+  }
+
+  link{
+    background-color: blue;
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+
+.tag{
+    color:rgb(227, 232, 182);
+    background-color: #590245;
+  }
+
+
+
+
