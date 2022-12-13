@@ -26,11 +26,22 @@ const createUser = async (name, username, email, age, password) => {
         comments: []
     };
 
-    const list = await userCollection.find({}, {projection: {_id: 0, username: 1}}).toArray();
-    for(let i=0; i<list.length; i++){
-    if(list[i]["username"].toLowerCase() == username.toLowerCase())throw "Username already exists"
+    const listOfUsernames = await userCollection.find({}, {projection: {_id: 0, username: 1}}).toArray();
+    for(let i=0; i<listOfUsernames.length; i++){
+    if(listOfUsernames[i]["username"].toLowerCase() == newUser.username.toLowerCase())throw "Username already exists"
     }
 
+    const listOfEmails = await userCollection.find({}, {projection: {_id: 0, email: 1}}).toArray();
+    for(let i=0; i<listOfEmails.length; i++){
+    if(listOfEmails[i]["email"].toLowerCase() == newUser.email.toLowerCase())throw "email already exists"
+    }
+    
+    await helperFunc.isNameValid(newUser.name, "name")
+    await helperFunc.isUsernameValid(newUser.username, "username");
+    await helperFunc.isAgeValid(newUser.age, "age");
+    await helperFunc.isEmailValid(newUser.email, "email");
+    await helperFunc.isPasswordValid(newUser.password, "password");
+    
     const saltRounds = 10;
     newUser.password =  await bcrypt.hash(password, saltRounds);
     
