@@ -8,6 +8,7 @@ if(loginForm){
     errorDiv.hidden = true;
     loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
+
     if(!usernameInput.value){
         errorDiv.hidden = false;
         errorDiv.innerHTML = 'please enter username';
@@ -40,7 +41,7 @@ if(loginForm){
         return false
     }
 
-    if(passwordInput.trim().length < 6){
+    if(passwordInput.value.trim().length < 6){
         errorDiv.hidden = false;
         errorDiv.innerHTML = 'password can not be less than 6 characters';
         return false
@@ -54,8 +55,7 @@ if(loginForm){
         return false
     }
 
+    event.target.submit()
+
     });
-}else{
-    errorDiv.hidden = false;
-    errorDiv.innerHTML = 'Unable to fetch login';
-  }
+}

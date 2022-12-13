@@ -44,7 +44,7 @@ if(signUpForm){
         return false
     }
 
-    if(!isNaN(ageInput.value)){
+    if(isNaN(ageInput.value)){
         errorDiv.hidden = false;
         errorDiv.innerHTML = 'age should be a number';
         return false
@@ -70,6 +70,8 @@ if(signUpForm){
         errorDiv.innerHTML = 'please enter a valid email';
         return false
     } 
+
+    event.target.submit()
 
 });
 }
