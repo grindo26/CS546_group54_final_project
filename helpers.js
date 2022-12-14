@@ -1,5 +1,4 @@
-//You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
-//You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
+const e = require("express");
 
 moment = require("moment");
 
@@ -53,8 +52,46 @@ const isUserLoggedInReturnsLogin = async (req) => {
     }
 };
 
+const isNameValid = async(name) => {
+    
+    
+    if(name.trim().length < 3) throw "name should atleast have 3 characters"
+}
+
+const isAgeValid = async(age) => {
+
+    if(isNaN(age)) {
+        throw "Age should be a number"
+    }else{
+        if(age<9) throw "user must be above 9 years old"
+    }
+
+}
+
+const isEmailValid = async(email) => {
+    
+  let emailConstraints = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/
+  if(!email.match(emailConstraints)) throw "please enter a valid email"
+}
+
+const isUsernameValid= async(username) => {
+    
+    let usernameAlphaNumCheck= /^[A-Za-z0-9]+$/
+    if(!username.match(usernameAlphaNumCheck)) throw "username should be alpha-numeric"
+    else if(/\s/.test(username)) throw "username should not contain empty spaces"
+    else if(username.trim().length < 4) throw "username should have more than 4 characters"
+  }
+
+const isPasswordValid = async(password) => {
+    
+    let passwordCheck = /^(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?-]{6,}$/
+    if(!password.match(passwordCheck)) throw "password should have atleast 1 Uppercase letter, 1 number and 1 special character"
+    else if(/\s/.test(password)) throw "password should not contain empty spaces"
+    else if(password.trim().length < 6) throw "password should have more than 6 characters"
+  }
+
 module.exports = {
-    description: "This is the helper function for Lab 5 for CS-546",
+    description: "This is the helper function",
     execValdnAndTrim,
     validateInput,
     validateStringLength,
@@ -63,4 +100,9 @@ module.exports = {
     isDateValid,
     isUserLoggedIn,
     isUserLoggedInReturnsLogin,
+    isNameValid,
+    isAgeValid,
+    isEmailValid,
+    isUsernameValid,
+    isPasswordValid
 };

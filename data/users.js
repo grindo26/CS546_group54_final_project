@@ -3,6 +3,21 @@ const mongoCollections = require("../config/mongoCollections");
 const { ObjectId } = require("mongodb");
 const bcrypt = require('bcryptjs')
 
+const getUserFromUsername = async (username) => {
+  const usersCollection = await mongoCollections.users();
+  const nameRegex = new RegExp(username, "i");
+  const checkUsername = await usersCollection.find({ username: { $regex: nameRegex } }).toArray();
+  return checkUsername;
+};
+
+const getUserFromEmail = async (email) => {
+  const usersCollection = await mongoCollections.users();
+  const nameRegex = new RegExp(email, "i");
+  const checkEmail = await usersCollection.find({ email: { $regex: nameRegex } }).toArray();
+  return checkEmail;
+};
+
+
 const createUser = async (name, username, email, age, password) => {
     const userCollection = await mongoCollections.users();
     //validate and update all params
@@ -26,11 +41,18 @@ const createUser = async (name, username, email, age, password) => {
         comments: []
     };
 
-    const list = await userCollection.find({}, {projection: {_id: 0, username: 1}}).toArray();
-    for(let i=0; i<list.length; i++){
-    if(list[i]["username"].toLowerCase() == username.toLowerCase())throw "Username already exists"
-    }
+    let checkIfUsernameExists = await getUserFromUsername(username);
+    if (checkIfUsernameExists.length != 0) throw "username already exists. Pick another username"
 
+    let checkIfEmailExists = await getUserFromEmail(email);
+    if (checkIfEmailExists.length != 0) throw "email already exists"
+    
+    await helperFunc.isNameValid(newUser.name, "name")
+    await helperFunc.isUsernameValid(newUser.username, "username");
+    await helperFunc.isAgeValid(newUser.age, "age");
+    await helperFunc.isEmailValid(newUser.email, "email");
+    await helperFunc.isPasswordValid(newUser.password, "password");
+    
     const saltRounds = 10;
     newUser.password =  await bcrypt.hash(password, saltRounds);
     

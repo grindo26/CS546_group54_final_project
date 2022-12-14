@@ -1,7 +1,57 @@
 <h1>{{list1.name}}</h1>
+
+<div class="dropdown">
+    <div class="select">
+        <span class="selected">Filter</span>
+        <div class="caret"></div>
+</div>
+<ul class="menu">
+<li>
+    <button onclick="handleClick()" >Name</button> 
+</li> 
+ <li>
+    <button onclick="filterObjects('price')">Price</button> 
+</li> 
+<li>
+ <button  onclick="filterObjects('rating')">Rating</button>
+</li> 
+<li class="active">
+   <button onclick="filterObjects('all')">Show All</button>
+</li>
+</ul> 
+</div>
+
+<div class="box name">
  <ul>
       {{#each list2}}
-        <li><a href="/attraction/{{this._id}}">{{this.name}}  </a></li>
+      <li><a href="/attractions/{{this._id}}">{{this.name}} </a></li>
       {{/each}}
     </ul>
+</div>
 
+<div class="box price">
+ <ul>
+      {{#each list2}}
+        <li><a href="/attractions/{{this._id}}">{{this.price}} </a></li>
+      {{/each}}
+    </ul>
+</div>
+
+<div class="box rating">
+ <ul>
+      {{#each list2}}
+        <li><a href="/attractions/{{this._id}}">{{this.rating}} </a></li>
+      {{/each}}
+    </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="../public/main.js"></script>
