@@ -36,23 +36,21 @@ const isDateValid = async (str) => {
     return new Date(str) !== "Invalid Date" && !isNaN(new Date(str)) && moment(str, "MM/DD/YYYY", true).isValid();
 };
 
-const isUserLoggedIn = async(req) => {
-    
-    if(req.session.user) {
+const isUserLoggedIn = async (req) => {
+    if (req.session.user) {
         return true;
-    }else{
+    } else {
         return false;
     }
-}
+};
 
-const isUserLoggedInReturnsLogin = async(req) => {
-    
-    if(req.session.user) {
+const isUserLoggedInReturnsLogin = async (req) => {
+    if (req.session.user) {
         return true;
-    }else{
-        return res.status(400).render('userLogin');
+    } else {
+        return res.status(400).render("userLogin");
     }
-}
+};
 
 const isNameValid = async(name) => {
     
