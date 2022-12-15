@@ -52,14 +52,15 @@ const getAllAttraction = async (cityId) => {
 };
 
 const getAttractionById = async (attractionId) => {
-    console.log(attractionId);
-    newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
-
+    console.log(attractionId)
+ //   newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
+    
     const attractionCollection = await mongoCollections.attractions();
-    const attractionList = await attractionCollection.findOne({ _id: ObjectId(attractionId) });
-    if (!attractionList) throw "Attractions doesn't exist with the given city name";
-    return ans;
-};
+    const attractionList = await attractionCollection.findOne({_id : ObjectId(attractionId)});
+    if (!attractionList) throw "attraction doesn't exist with the given city name";
+    return attractionList;
+   };
+
 
 const getPopularAttractions = async (num_attractions) => {
     if (num_attractions === undefined || num_attractions === null) {

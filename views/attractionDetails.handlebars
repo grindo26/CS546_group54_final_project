@@ -1,3 +1,14 @@
-<p>{{singleAttraction}}</p>
+<p> Get detailed info about the attraction here: </p>
+<title>{{title}}</title>
+<p>Name: {{singleAttraction.name}}</p>
+<p>Reviews: {{singleAttraction.reviews}}</p>
+<p>Rating: {{singleAttraction.rating}}</p>
+<p>Price: {{singleAttraction.price}}</p>
+<p>{{singleAttraction.photo}}</p>
+<p>Location: {{singleAttraction.location}}</p>
 
-
+ <form method="POST" action="/attractions/" id="attract"> 
+    <label for="reviewInput"> Review:</label><br>
+    <input type="text" id="reviewInput" name="reviewInput"><br>
+    <button type="submit">Submit Review</button>
+    </form>
