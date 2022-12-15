@@ -27,20 +27,6 @@ route("/:cityId").get(async (req, res) => {
     }
 });
 
-router
-.route('/attraction/:id')
-.get(async (req, res) => {
-    id = req.params.id
-  try {
-    //if(!ObjectId.isValid(id)) return res.status(400).json("not a valid city")
-    const attractionFound = await attractionData.getAttractionById(id)
-    //if(!attractionFound) return res.status(404).json("not a valid attractionId")
-    return res.status(200).render('attractionDetails',  {singleAttraction: attractionFound});
-} catch (e) {
-    return res.status(404).json(e);
-}
-});
-
 // .delete(async (req, res) => {
 //   try {
 //    if(!ObjectId.isValid(req.params.attractionId)) return res.status(400).json("not a valid object ID")
