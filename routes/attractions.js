@@ -7,7 +7,7 @@ const { ObjectId } = require("mongodb");
 
 router.route("/").get(async (req, res) => {
     try {
-        return res.status(200).json({ Hello: "There" });
+        return res.status(200).render('addAttraction')
     } catch (e) {
         return res.status(500).json("Couldn't get the attraction!");
     }
