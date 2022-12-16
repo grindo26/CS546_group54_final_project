@@ -1,5 +1,6 @@
 <p> Get detailed info about the attraction here: </p>
 <title>{{title}}</title>
+<p>{{singleAttraction}}</p>
 <p>Name: {{singleAttraction.name}}</p>
 <p>Reviews: {{singleAttraction.reviews}}</p>
 <p>Rating: {{singleAttraction.rating}}</p>
@@ -7,8 +8,17 @@
 <p>{{singleAttraction.photo}}</p>
 <p>Location: {{singleAttraction.location}}</p>
 
- <form method="POST" action="/attractions/" id="attract"> 
-    <label for="reviewInput"> Review:</label><br>
-    <input type="text" id="reviewInput" name="reviewInput"><br>
-    <button type="submit">Submit Review</button>
-    </form>
+<form id="reviewForm">
+   <label for="reviewTxt"> Review:</label><br>
+   <input type="text" id="reviewTxt" name="reviewTxt"><br>
+   <label for="ratingTxt"> Rating:</label><br>
+   <input type="text" id="ratingTxt" name="ratingTxt"><br>
+   <button type="submit">Submit Review</button>
+</form>
+
+<div id="reviewsDiv">
+   <ul id="reviewList"></ul>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/public/js/reviews.js"></script>
