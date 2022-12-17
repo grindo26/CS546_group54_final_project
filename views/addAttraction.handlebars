@@ -1,23 +1,40 @@
 <p>{{error}}</p>
 <title>{{title}}</title>
-    <p id="error"></p>
-    <p> Add an attraction </p>
-    <form method="POST" action="/attractions/" id="attraction-form"> 
+<p id="error"></p>
+<p> Add an attraction </p>
+<form method="POST" action="/attractions" id="attraction-form" enctype="multipart/form-data">
     <label for="attractionInput"> Name:</label><br>
     <input type="text" id="attractionInput" name="attractionInput"><br>
-
-  <label for="cityInput">Choose a city:</label><br>
- <select name="cityInput" id="cityInput">
-  <option value="NYC">NYC</option>
-  <option value="Boston">Boston</option>
-  <option value="New Jersey">NewJersey</option>
-</select> <br>
-     
-    <label for="priceInput"> Price:</label><br>
-    <input type="text" id="PriceInput" name="priceInput"><br>
+    <label for="cityInput">Choose a city:</label><br>
+    <select id="cityInput" name="cityInput">
+        <option value="">----Select an option------</option>
+    </select>
+    <label for="priceInput">Price:</label><br>
+    <select name="priceInput" id="priceInput">
+        <option value="$">$</option>
+        <option value="$$">$$</option>
+        <option value="$$$">$$$</option>
+    </select> <br>
 
     <label for="locationInput"> Location:</label><br>
     <input type="text" id="locationInput" name="locationInput"><br>
-     <br>
-    <button type="submit">Add Attraction</button>
-    </form>
+    <br>
+    <label for="Tag1">Indoor Activity</label>
+    <input type="checkbox" id="Tag1" name="Tags" value="Indoor Activity">
+    <br>
+    <label for="Tag2">Outdoor Activity</label>
+    <input type="checkbox" id="Tag2" name="Tags" value="Outdoor Activity">
+    <br>
+    <label for="Tag3">Monument</label>
+    <input type="checkbox" id="Tag3" name="Tags" value="Monument">
+    <br>
+    <label for="Tag4">Parks and Activities</label>
+    <input type="checkbox" id="Tag4" name="Tags" value="Parks">
+    <br>
+    <label for="attrImg">Select an image:</label><br>
+    <input type="file" id="attrImg" name="attrImg">
+    <button type="submit">Submit</button>
+</form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/public/js/addAttractions.js"></script>

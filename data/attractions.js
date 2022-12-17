@@ -7,14 +7,15 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
     //validate and update all params
     name = await helperFunc.execValdnAndTrim(name, "name");
     cityId = await helperFunc.execValdnAndTrim(cityId, "cityId");
-    await helperFunc.execValdnForArr(reviews, "reviews");
-    rating = await helperFunc.execValdnAndTrim(rating, "rating");
+    // await helperFunc.execValdnForArr(reviews, "reviews");
+    // rating = await helperFunc.execValdnAndTrim(rating, "rating");
     price = await helperFunc.execValdnAndTrim(price, "price");
-    photo = await helperFunc.execValdnAndTrim(photo, "photo");
+    // photo = await helperFunc.execValdnAndTrim(photo, "photo");
     location = await helperFunc.execValdnAndTrim(location, "location");
     if (tags.length != 0) {
         await helperFunc.execValdnForArr(tags, "tags");
     }
+    const imageBuffer = Buffer.from(photo, "binary").toString("base64");
 
     // validation ends-----------------
     let newAttraction = {
@@ -23,7 +24,7 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
         reviews: reviews,
         rating: rating,
         price: price,
-        photo: photo,
+        photo: imageBuffer,
         location: location,
         tags: tags,
     };
