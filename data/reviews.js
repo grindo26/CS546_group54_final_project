@@ -41,6 +41,16 @@ const createReview = async (userId, attractionId, rating, review) => {
     return returnObj;
 };
 
+const getReviewById = async (id) => {
+    id = await helperFunc.execValdnAndTrim(id, "reviewId");
+    if (!ObjectId.isValid(id)) throw { statusCode: 400, message: `reviewId provided is not a valid ObjectId` };
+    const reviewsCollection = await mongoCollections.reviews();
+    const reviewObj = await reviewsCollection.findOne({ _id: ObjectId(id) });
+    if (!reviewObj || reviewObj === null || reviewObj === undefined) throw { statusCode: 404, message: `No review exists with that id` };
+    return reviewObj;
+};
+
 module.exports = {
     createReview,
+    getReviewById,
 };
