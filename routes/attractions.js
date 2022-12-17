@@ -35,22 +35,31 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
         const imageData = fs.readFileSync(req.file.path);
 
         const addAttraction = await attractionData.createAttraction(name, cityId, reviews, rating, price, imageData, location, tags);
-        return res.status(200).render("attractionAdded");
+        return res.status(200).render("attractionDetails", { title: "Attraction", singleAttraction: addAttraction, userName: req.session.userName });
     } catch (e) {
         return res.status(500).json("Couldn't get the attraction!");
     }
 });
 
-router.route("/:attractionId").get(async (req, res) => {
-    id = req.params.attractionId;
-    try {
-        const attractionFound = await attractionData.getAttractionById(id);
-        return res
-            .status(200)
-            .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName });
-    } catch (e) {
-        return res.status(404).json(e);
-    }
-});
+router
+    .route("/:attractionId")
+    .get(async (req, res) => {
+        let id = req.params.attractionId;
+        try {
+            id = await helperFunc.execValdnAndTrim(id, "Attraction ID");
+            if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
+            const attractionFound = await attractionData.getAttractionById(id);
+            return res
+                .status(200)
+                .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName });
+        } catch (e) {
+            return res.status(404).json(e);
+        }
+    })
+    .delete(async (req, res) => {
+        let id = req.params.attractionId;
+        try {
+        } catch (error) {}
+    });
 
 module.exports = router;

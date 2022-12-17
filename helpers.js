@@ -91,6 +91,10 @@ const validateRating = async (rating) => {
     return parseFloat(rating).toFixed(1);
 };
 
+const validatePriceRange = async (str) => {
+    if (str != "$" && str != "$$" && str != "$$$") throw { statusCode: 400, message: "Invalid data entered in Price" };
+};
+
 module.exports = {
     description: "This is the helper function",
     execValdnAndTrim,
@@ -107,4 +111,5 @@ module.exports = {
     isUsernameValid,
     isPasswordValid,
     validateRating,
+    validatePriceRange,
 };

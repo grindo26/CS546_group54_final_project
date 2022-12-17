@@ -40,7 +40,7 @@ router
             if (create) {
                 return res.redirect("/login");
             } else {
-                throw "Internal Server Error";
+                throw { statusCode: 404, message: "Internal Server Error" };
             }
         } catch (e) {
             if (e == "Internal Server Error") {
