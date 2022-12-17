@@ -1,58 +1,56 @@
 const express = require("express");
 const router = express.Router();
 const data = require("../data");
-const cityData = data.citiesData;
 const attractionData = data.attractionsData;
-const reviewData = data.reviewData;
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
-const { reviewsData } = require("../data");
+const fs = require("fs");
+const multer = require("multer");
+const destinationImg = multer({ dest: "uploads/" });
 
 router.route("/").get(async (req, res) => {
     try {
-        return res.status(200).render('addAttraction')
+        return res.status(200).render("addAttraction", { title: "Add a new attraction" });
     } catch (e) {
-        return res.status(500).json("Couldn't get the attraction!");
+        return res.status(404).json("Couldn't find what you're looking for");
     }
-})
-.post(async (req, res) => {
+});
+
+router.post("/", destinationImg.single("attrImg"), async (req, res) => {
     try {
-
         let name = req.body.attractionInput;
-        let cityName = req.body.cityInput;
-        let price = req.body.priceInput
-        let location = req.body.Location;
-        let reviews = ["good", "hvhvh"];
-        let rating = 4.6;
-        let photo = "xyssfdjnnz"
-        let tags=["hi", "hello"];
-        
-        await helperFunc.execValdnAndTrim(name, "name")
-        await helperFunc.isNameValid(name, "name")
+        let cityId = req.body.cityInput;
+        let price = req.body.priceInput;
+        let location = req.body.locationInput;
+        let reviews = [];
+        let rating = 0;
+        // TODO: when selecting one tag, an array isn't passed. Handle
+        let tags = req.body.Tags;
 
-        const cityFound = await cityCollection.findOne({ name: cityName });
-        let cityId=cityFound._id;
+        name = await helperFunc.execValdnAndTrim(name, "Attraction Name");
+        cityId = await helperFunc.execValdnAndTrim(cityId, "City Id");
+        if (!ObjectId.isValid(cityId)) {
+            throw { statusCode: 400, message: "Sorry the city you selected doesn't exist. Please select another." };
+        }
+        const imageData = fs.readFileSync(req.file.path);
 
-        const addAttraction = await attractionData.createAttraction(name, cityId, reviews, rating, price, photo, location, tags);
-        return res.status(200).render('attractionAdded')
+        const addAttraction = await attractionData.createAttraction(name, cityId, reviews, rating, price, imageData, location, tags);
+        return res.status(200).render("attractionAdded");
     } catch (e) {
         return res.status(500).json("Couldn't get the attraction!");
     }
 });
 
-router
-.route('/:attractionId')
-.get(async (req, res) => {
+router.route("/:attractionId").get(async (req, res) => {
     id = req.params.attractionId;
-  try {
-    //if(!ObjectId.isValid(id)) return res.status(400).json("not a valid city")
-    const attractionFound = await attractionData.getAttractionById(id);
-    //if(!attractionFound) return res.status(404).json("not a valid attractionId")
-    return res.status(200).render('attractionDetails',  {title: "Attraction Details", singleAttraction: attractionFound, reviews: attractionFound.reviewArray});
-} catch (e) {
-    return res.status(404).json(e);
-}
+    try {
+        const attractionFound = await attractionData.getAttractionById(id);
+        return res
+            .status(200)
+            .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName });
+    } catch (e) {
+        return res.status(404).json(e);
+    }
 });
-
 
 module.exports = router;
