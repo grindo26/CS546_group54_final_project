@@ -1,21 +1,22 @@
 * {
 	box-sizing: border-box;
 }
-
+html{
+background: rgb(220, 220, 220);
+}
 html,
 body {
-  background: slateblue;
+  width: 100%;
   margin: 0%;
   padding: 0%;
   font-family: "Lucida Console", "Courier New", monospace;
-  justify-content: center;
-  align-items: center
+  background-color: rgba(0, 0, 0, 0.0);
+
 }
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 
 
 main {
-	max-width: 75%;
 	margin: auto;
 }
 
@@ -42,12 +43,12 @@ label {
 }
 
 form{
-    background-color: rgb(227, 232, 182);
+   
 }
 .button {
     background-color: #590245;
   
-    color: white;
+   
     padding: 5px 10px;
     text-align: center;
   
@@ -189,4 +190,66 @@ dl{
 .show{
   display: block;
 }
+
+.p-cities{
+  margin: 10px;
+}
+
+.divider
+{
+	position: relative;
+	margin-top: 5px;
+  margin-bottom: 5px;
+	height: 1px;
+}
+
+.div-transparent:before
+{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 5%;
+	right: 5%;
+	width: 90%;
+	height: 1px;
+	background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
+}
+
+/* Dropdown Button */
+.dropimg {
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropimg {background-color: #3e8e41;}
 

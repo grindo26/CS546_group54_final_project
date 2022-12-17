@@ -8,7 +8,7 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     name = await helperFunc.execValdnAndTrim(name, "name");
     state = await helperFunc.execValdnAndTrim(state, "state");
     country = await helperFunc.execValdnAndTrim(country, "state");
-   // await helperFunc.execValdnForArr(attractions, "attractions");
+    // await helperFunc.execValdnForArr(attractions, "attractions");
     //num_attractions = await helperFunc.execValdnAndTrim(num_attractions, "num_attractions");
     //num_reviews = await helperFunc.execValdnAndTrim(num_reviews, "num_reviews");
 
@@ -31,35 +31,34 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
 };
 
 const getCityById = async (cityId) => {
-const cityCollection = await mongoCollections.cities();
-const city = await cityCollection.findOne({_id: ObjectId(cityId)});
-return city;
-
+    const cityCollection = await mongoCollections.cities();
+    const city = await cityCollection.findOne({ _id: ObjectId(cityId) });
+    return city;
 };
 
-const checkCity = async (name, state) => { 
+const checkCity = async (name, state) => {
+    const cityCollection = await mongoCollections.cities();
 
-     const cityCollection = await mongoCollections.cities();
-
-    const checkReg = new RegExp(name, "i")
-    const checkReg2 = new RegExp(state, "i")
+    const checkReg = new RegExp(name, "i");
+    const checkReg2 = new RegExp(state, "i");
     // const cityName = await cityCollection.findOne({name: {$regex: checkReg}}, {state: {$regex: state}});
     // const cityState = await cityCollection.findOne({state: {$regex: checkReg2}});
-    const checkCity = await cityCollection.findOne({name: {$regex: checkReg}, state: {$regex: checkReg2}});
-    if(checkCity == null){ return true }
-    else { return false}
-      
+    const checkCity = await cityCollection.findOne({ name: { $regex: checkReg }, state: { $regex: checkReg2 } });
+    if (checkCity == null) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 const getAllCities = async (num_cities) => {
     //if num_cities is not supplied, fetch 5 cities, otherwise fetch the num specified.
-    if (num_cities === undefined || str === null) {
+    if (num_cities === undefined || num_cities === null) {
         num_cities = 5;
     }
-    if (!(num_cities > 0)) throw `num_cities is not a valid string`;
     if (isNaN(num_cities)) throw `num_cities should be a positive whole number`;
     if (!/^\d+$/.test(num_cities)) throw `num_cities should be a positive whole number`;
-    if (parseInt(num_cities) <= 0) throw `num_cities should be a positive whole number`;
+    if (parseInt(num_cities) < 0) throw `num_cities should be a positive whole number`;
     if (num_cities > 2 ** 30 || num_cities < -(2 ** 30)) throw "Number too high. Please change.";
     //limit has the range of 2^31 and -2^31
     const cityCollection = await mongoCollections.cities();
@@ -73,9 +72,8 @@ const getAllCities = async (num_cities) => {
 };
 
 module.exports = {
-    createCity,getCityById,checkCity, getAllCities
+    createCity,
+    getCityById,
+    checkCity,
+    getAllCities,
 };
-
-
-
-
