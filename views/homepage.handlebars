@@ -15,15 +15,6 @@
                 </div>
             {{/each}}
         </div>
-        <div>
-            {{#each attractions}}
-                <div class="card" style="width: 300px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{this.name}}</h5>
-                        <p class="card-text">Rating: {{this.rating}}</p>
-                        <a href="/attractions/{{this._id}}" class="btn btn-primary">View</a>
-            {{/each}}
-        </div>
     </div>
     <div style="width: 100%;margin-top:30px; margin-bottom:80px;">
         <h2 class="text-center" style="font-size: 200%; margin-top:20px;"><b>Popular Attractions</b></h2>
@@ -45,9 +36,7 @@
 
 
 </main>
-{{#if userName}}
-    <p>User logged in {{userName}}</p>
-    {{!-- {{#if userName}}
+{{!-- {{#if userName}}
 <p>User logged in {{userName}}</p>
 {{/if}}
 <div class="row">
