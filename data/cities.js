@@ -31,8 +31,13 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
 };
 
 const getCityById = async (cityId) => {
+    cityId = await helperFunc.execValdnAndTrim(cityId, "CityId");
+    if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
     const cityCollection = await mongoCollections.cities();
     const city = await cityCollection.findOne({ _id: ObjectId(cityId) });
+    if (!city || city === null || city === undefined) {
+        throw { statusCode: 404, message: "No city exists for this CityId" };
+    }
     return city;
 };
 
@@ -71,9 +76,38 @@ const getAllCities = async (num_cities) => {
     return l_arrCities;
 };
 
+const incrReviewCountInCityStats = async (cityId, incrField) => {
+    cityId = await helperFunc.execValdnAndTrim(cityId, "CityId");
+    if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
+    const cityCollection = await mongoCollections.cities();
+    const updatedInfo = await cityCollection.updateOne({ _id: ObjectId(cityId) }, { $inc: { [incrField]: 1 } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
+const addAttractionInCity = async (cityId, attractionId) => {
+    cityId = await helperFunc.execValdnAndTrim(cityId, "CityId");
+    if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    const cityCollection = await mongoCollections.cities();
+    const updatedInfo = await cityCollection.updateOne(
+        { _id: ObjectId(cityId) },
+        { $inc: { num_attractions: 1 }, $push: { attractions: attractionId } }
+    );
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
 module.exports = {
     createCity,
     getCityById,
     checkCity,
     getAllCities,
+    incrReviewCountInCityStats,
+    addAttractionInCity,
 };
