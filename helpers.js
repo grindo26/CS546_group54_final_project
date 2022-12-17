@@ -46,6 +46,7 @@ const isUserLoggedIn = async(req) => {
     }
 }
 
+
 const isUserLoggedInReturnsLogin = async(req) => {
     
     if(req.session.user) {
