@@ -96,32 +96,23 @@ dl{
     background-color: #590245;
   }
 
-  .dropdown {
-    min-width: 15em;
-    position: relative;
-    margin: 2em;
+  .content {
+    padding: 10px;
+    margin: 10px;
   }
-
-  .dropdown * {
-    box-sizing: border-box;
+  
+  #filter {
+    background-color: #ccc;
+    padding: 10px;
   }
-
-  .select {
-    background: #2a2f3b;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px #2a2f3b solid;
-    border-radius: 0.5em;
-    padding: 1em;
-    cursor: pointer;
-    transition: backgorund 0.3s;
+  
+  .attrContent {
+    padding: 10px;
+    margin: 10px;
   }
-
-  .select-clicked{
-    border: 2px #26489a solid;
-    box-shadow: 0 0 0.8em #26489a;
+  .cityContent {
+    padding: 10px;
+    margin: 10px;
   }
 
   .select:hover {
@@ -198,3 +189,4 @@ dl{
 .show{
   display: block;
 }
+

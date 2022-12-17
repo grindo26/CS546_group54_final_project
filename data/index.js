@@ -4,4 +4,5 @@ module.exports = {
     attractionsData: require("./attractions"),
     commentsData: require("./comments"),
     reviewsData: require("./reviews"),
+    searchData: require('./search')
 };
