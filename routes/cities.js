@@ -61,6 +61,7 @@ route("/:cityId")
     }
 });
 
+
 // router.route('/attraction/:id')
 // .get(async (req, res) => {
 //     id = req.params.id
@@ -73,7 +74,6 @@ route("/:cityId")
 //     return res.status(404).json(e);
 // }
 // });
-
 
 // .delete(async (req, res) => {
 //   try {

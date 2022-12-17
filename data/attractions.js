@@ -44,26 +44,47 @@ const getAllAttraction = async (cityId) => {
     //   throw 'movieId cannot be an empty string or just spaces';
     // movieId = movieId.trim();
     // if (!ObjectId.isValid(movieId)) throw 'invalid object ID';
-  
-   const attrCollection = await mongoCollections.attractions();
-//    console.log(cityId)
-   const attrList = await attrCollection.find({ cityId:cityId }).toArray()
-   return attrList;
-   
+
+    const attrCollection = await mongoCollections.attractions();
+    //    console.log(cityId)
+    const attrList = await attrCollection.find({ cityId: cityId }).toArray();
+    return attrList;
 };
 
 const getAttractionById = async (attractionId) => {
     console.log(attractionId)
-    newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
+ //   newId = await helperFunc.execValdnAndTrim(attractionId, "Attraction ID");
     
     const attractionCollection = await mongoCollections.attractions();
     const attractionList = await attractionCollection.findOne({_id : ObjectId(attractionId)});
-    if (!attractionList) throw "Attractions doesn't exist with the given city name";
-    return ans;
+    if (!attractionList) throw "attraction doesn't exist with the given city name";
+    return attractionList;
    };
 
 
+const getPopularAttractions = async (num_attractions) => {
+    if (num_attractions === undefined || num_attractions === null) {
+        num_attractions = 5;
+    }
+    if (!(num_attractions > 0)) throw `num_attractions is not a valid string`;
+    if (isNaN(num_attractions)) throw `num_attractions should be a positive whole number`;
+    if (!/^\d+$/.test(num_attractions)) throw `num_attractions should be a positive whole number`;
+    if (parseInt(num_attractions) <= 0) throw `num_attractions should be a positive whole number`;
+    if (num_attractions > 2 ** 30 || num_attractions < -(2 ** 30)) throw "Number too high. Please change.";
+    //limit has the range of 2^31 and -2^31
+    const attractionCollection = await mongoCollections.attractions();
+    const l_arrAttractions = await attractionCollection
+        .find({}, { projection: { _id: 1, reviews: 0 } })
+        .sort({ rating: -1, price: 1 })
+        .limit(num_attractions)
+        .toArray();
+    if (l_arrAttractions.length === 0) throw "No attractions in the database";
+    return l_arrAttractions;
+};
 
 module.exports = {
-    createAttraction, getAllAttraction, getAttractionById
+    createAttraction,
+    getAllAttraction,
+    getAttractionById,
+    getPopularAttractions,
 };

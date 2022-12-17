@@ -53,6 +53,31 @@ const checkCity = async (name, state) => {
       
 };
 
-module.exports = {
-    createCity,getCityById,checkCity
+const getAllCities = async (num_cities) => {
+    //if num_cities is not supplied, fetch 5 cities, otherwise fetch the num specified.
+    if (num_cities === undefined || str === null) {
+        num_cities = 5;
+    }
+    if (!(num_cities > 0)) throw `num_cities is not a valid string`;
+    if (isNaN(num_cities)) throw `num_cities should be a positive whole number`;
+    if (!/^\d+$/.test(num_cities)) throw `num_cities should be a positive whole number`;
+    if (parseInt(num_cities) <= 0) throw `num_cities should be a positive whole number`;
+    if (num_cities > 2 ** 30 || num_cities < -(2 ** 30)) throw "Number too high. Please change.";
+    //limit has the range of 2^31 and -2^31
+    const cityCollection = await mongoCollections.cities();
+    const l_arrCities = await cityCollection
+        .find({}, { projection: { _id: 1, attractions: 0 } })
+        .sort({ num_attractions: -1, num_reviews: -1 })
+        .limit(num_cities)
+        .toArray();
+    if (l_arrCities.length === 0) throw "No cities in the database";
+    return l_arrCities;
 };
+
+module.exports = {
+    createCity,getCityById,checkCity, getAllCities
+};
+
+
+
+
