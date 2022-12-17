@@ -46,8 +46,6 @@ const checkCity = async (name, state) => {
     // const cityName = await cityCollection.findOne({name: {$regex: checkReg}}, {state: {$regex: state}});
     // const cityState = await cityCollection.findOne({state: {$regex: checkReg2}});
     const checkCity = await cityCollection.findOne({name: {$regex: checkReg}, state: {$regex: checkReg2}});
-
-    console.log("checkCity hai ye",checkCity)
     if(checkCity == null){ return true }
     else { return false}
       
