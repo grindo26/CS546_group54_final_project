@@ -23,7 +23,7 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     };
 
     const insertInfo = await cityCollection.insertOne(newCity);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add a record into cities";
+    if (!insertInfo.acknowledged || !insertInfo.insertedId) throw { statusCode: 500, message: "Could not add a record into cities" };
     const newId = insertInfo.insertedId.toString();
     newCity._id = newId;
     const returnObj = Object.assign({ _id: newId }, newCity);
@@ -61,10 +61,10 @@ const getAllCities = async (num_cities) => {
     if (num_cities === undefined || num_cities === null) {
         num_cities = 5;
     }
-    if (isNaN(num_cities)) throw `num_cities should be a positive whole number`;
-    if (!/^\d+$/.test(num_cities)) throw `num_cities should be a positive whole number`;
-    if (parseInt(num_cities) < 0) throw `num_cities should be a positive whole number`;
-    if (num_cities > 2 ** 30 || num_cities < -(2 ** 30)) throw "Number too high. Please change.";
+    if (isNaN(num_cities)) throw { statusCode: 400, message: `num_cities should be a positive whole number` };
+    if (!/^\d+$/.test(num_cities)) throw { statusCode: 400, message: `num_cities should be a positive whole number` };
+    if (parseInt(num_cities) < 0) throw { statusCode: 400, message: `num_cities should be a positive whole number` };
+    if (num_cities > 2 ** 30 || num_cities < -(2 ** 30)) throw { statusCode: 400, message: "Number too high. Please change." };
     //limit has the range of 2^31 and -2^31
     const cityCollection = await mongoCollections.cities();
     const l_arrCities = await cityCollection
@@ -72,7 +72,7 @@ const getAllCities = async (num_cities) => {
         .sort({ num_attractions: -1, num_reviews: -1 })
         .limit(num_cities)
         .toArray();
-    if (l_arrCities.length === 0) throw "No cities in the database";
+    if (l_arrCities.length === 0) throw { statusCode: 400, message: "No cities in the database" };
     return l_arrCities;
 };
 
