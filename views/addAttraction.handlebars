@@ -1,0 +1,23 @@
+<p>{{error}}</p>
+<title>{{title}}</title>
+    <p id="error"></p>
+    <p> Add an attraction </p>
+    <form method="POST" action="/attractions/" id="attraction-form"> 
+    <label for="attractionInput"> Name:</label><br>
+    <input type="text" id="attractionInput" name="attractionInput"><br>
+
+  <label for="cityInput">Choose a city:</label><br>
+ <select name="cityInput" id="cityInput">
+  <option value="NYC">NYC</option>
+  <option value="Boston">Boston</option>
+  <option value="New Jersey">NewJersey</option>
+</select> <br>
+     
+    <label for="priceInput"> Price:</label><br>
+    <input type="text" id="PriceInput" name="priceInput"><br>
+
+    <label for="locationInput"> Location:</label><br>
+    <input type="text" id="locationInput" name="locationInput"><br>
+     <br>
+    <button type="submit">Add Attraction</button>
+    </form>
