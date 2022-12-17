@@ -15,10 +15,16 @@ router.route("/").get(async (req, res) => {
             cities: l_arrCities,
             attractions: l_arrAttractions,
             title: "Home",
-            login: "User Logged in",
+            isLoggedIn: false,
         });
     } else {
-        return res.render("homepage", { cities: l_arrCities, attractions: l_arrAttractions, title: "Home" });
+        return res.render("homepage", {
+            cities: l_arrCities,
+            attractions: l_arrAttractions,
+            title: "Home",
+            isLoggedIn: true,
+            userName: req.session.user,
+        });
     }
 });
 module.exports = router;

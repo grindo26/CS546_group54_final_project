@@ -4,15 +4,24 @@
         <div class="divider div-transparent"></div>
         <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {{#each cities}}
-            <div class="col-sm" style="max-width: 300px;">
-                <div class="card p-cities">
-                    <div class="card-body text-center shadow">
-                        <h3 class="card-title" style="background: aliceblue;">{{this.name}}</h3>
-                        <p class="card-text" style="margin-bottom: 30px;">State: {{this.state}} </p>
-                        <a href="/cities/{{this._id}}" class="btn btn-primary">Visit City</a>
+                <div class="col-sm" style="max-width: 300px;">
+                    <div class="card p-cities">
+                        <div class="card-body text-center shadow">
+                            <h3 class="card-title" style="background: aliceblue;">{{this.name}}</h3>
+                            <p class="card-text" style="margin-bottom: 30px;">State: {{this.state}} </p>
+                            <a href="/cities/{{this._id}}" class="btn btn-primary">Visit City</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {{/each}}
+        </div>
+        <div>
+            {{#each attractions}}
+                <div class="card" style="width: 300px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{this.name}}</h5>
+                        <p class="card-text">Rating: {{this.rating}}</p>
+                        <a href="/attractions/{{this._id}}" class="btn btn-primary">View</a>
             {{/each}}
         </div>
     </div>
@@ -21,22 +30,24 @@
         <div class="divider div-transparent"></div>
         <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {{#each attractions}}
-            <div class="col-sm" style="max-width: 300px;">
-                <div class="card p-cities" style="min-height: 100%;">
-                    <div class="card-body text-center shadow">
-                        <h3 class="card-title" style="background: aliceblue;">{{this.name}}</h3>
-                        <p class="card-text" style="margin-bottom: 30px;">Rating: {{this.rating}} </p>
-                        <a href="/attractions/{{this._id}}" class="btn btn-primary">View Attraction</a>
+                <div class="col-sm" style="max-width: 300px;">
+                    <div class="card p-cities" style="min-height: 100%;">
+                        <div class="card-body text-center shadow">
+                            <h3 class="card-title" style="background: aliceblue;">{{this.name}}</h3>
+                            <p class="card-text" style="margin-bottom: 30px;">Rating: {{this.rating}} </p>
+                            <a href="/attractions/{{this._id}}" class="btn btn-primary">View Attraction</a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {{/each}}
         </div>
     </div>
 
-    
+
 </main>
-{{!-- {{#if userName}}
+{{#if userName}}
+    <p>User logged in {{userName}}</p>
+    {{!-- {{#if userName}}
 <p>User logged in {{userName}}</p>
 {{/if}}
 <div class="row">
