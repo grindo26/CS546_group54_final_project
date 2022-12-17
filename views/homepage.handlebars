@@ -1,2 +1,41 @@
-<title> {{title}} </title>
-<a href="/logout">Click here to logout</a>
+<main>
+    <div>
+        {{#each cities}}
+            <div class="card" style="width: 300px;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">State: {{this.state}}</p>
+                    <a href="#" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div>
+        {{#each attractions}}
+            <div class="card" style="width: 300px;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">Rating: {{this.rating}}</p>
+                    <a href="#" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</main>
+{{#if login}}
+    <p>User logged in {{login}}</p>
+{{/if}}
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                    class="rounded-circle img-fluid" style="width: 150px;">
+                <h5 class="my-3">user Profile</h5>
+            </div>
+        </div>
+        <a href="/login">Login</a>
+    </div>
+</div>
+</div>

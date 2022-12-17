@@ -1,12 +1,14 @@
 <p>{{error}}</p>
 <title>{{title}}</title>
-    <p> Enter a username and password to sign up </p>
-    <form method="POST" action="/login" id="login-form"> 
+<p id="error">{{error}}</p>
+<p> Enter a username and password to sign up </p>
+<form method="POST" action="/login" id="login-form">
     <label for="usernameInput"> Username:</label><br>
     <input type="text" id="usernameInput" name="usernameInput"><br>
     <label for="passwordInput"> Password:</label><br>
     <input type="password" id="passwordInput" name="passwordInput"><br>
     <button type="submit">Sign in</button>
-    </form>
+</form>
 
 <a href="/signUp">Click here to sign-up!</a>
+<script src="../public/zjs/login.js"></script>

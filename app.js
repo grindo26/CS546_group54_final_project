@@ -1,23 +1,28 @@
 const express = require("express");
 const app = express();
 const configRoutes = require("./routes");
-const exphbs = require('express-handlebars');
-const session = require('express-session');
-const static = express.static(__dirname + '/public');
+const exphbs = require("express-handlebars");
+const session = require("express-session");
+const static = express.static(__dirname + "/public");
+const path = require("path");
 
 app.use(express.json());
-app.use('/public', static);
+app.use("/public", static);
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
+app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 
-app.use(session({
-    name: 'AuthCookie',
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true
-  }))
+app.use(
+    session({
+        name: "AuthCookie",
+        secret: "secret",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
-app.use(express.urlencoded({extended: true}));
-app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.use(express.urlencoded({ extended: true }));
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 configRoutes(app);
 

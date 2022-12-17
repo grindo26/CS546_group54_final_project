@@ -5,11 +5,12 @@ const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
 const bcrypt = require('bcryptjs');
 
+
 router
 .route("/")
 .get(async (req, res) => {
    
-    if(req.session.user)
+    if(req.session.user)   
     {
       return res.redirect('/');
     }
@@ -26,24 +27,20 @@ router
  let username = req.body.usernameInput;
  let email = req.body.emailInput;
  let password = req.body.passwordInput;
- 
-  if(typeof username == 'undefined') throw "Please enter the username"
-  if(typeof password == 'undefined') throw "Please enter the password"
-  if(typeof username != 'string' || typeof password != 'string') throw "Id and password must be string"
-  if(username.trim().length < 4) throw "username should have more than 4 characters"
-  if(password.trim().length < 6) throw "passwored should have more than 6 characters"
-  if(/\s/.test(username) || /\s/.test(password)) throw "username & password cannot have empty spaces"
-  if(username.trim().length === 0 || password.trim().length === 0) throw "username or password cannot be empty spaces"
-  username = username.toLowerCase();
-  
-  if(age<10) throw "Oops! Age limit for our app is above 10 years"
+   
+  await helperFunc.execValdnAndTrim(name, "name")
+  await helperFunc.execValdnAndTrim(age, "age")
+  await helperFunc.execValdnAndTrim(username, "username")
+  await helperFunc.execValdnAndTrim(email, "email")
+  await helperFunc.execValdnAndTrim(password, "password")
 
-  let alphaNum = /^[A-Za-z0-9]+$/;
-  if(!username.match(alphaNum)) throw "username can only be alpha-numeric"
-  
-  let passwordConstaints = /^(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?-]{6,}$/
-  
-  if(!password.match(passwordConstaints)) throw "password should contain atleast an uppercase letter, a special character and a number and should be minimum 6 characters long"
+  username = username.toLowerCase();
+
+  await helperFunc.isNameValid(name, "name")
+  await helperFunc.isAgeValid(age, "age");
+  await helperFunc.isUsernameValid(username, "username");
+  await helperFunc.isEmailValid(email, "email");
+  await helperFunc.isPasswordValid(password, "password");
  
   const create = await data.usersData.createUser(name,username,email,age,password);
     if(create) {
