@@ -5,7 +5,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{this.name}}</h5>
                     <p class="card-text">State: {{this.state}}</p>
-                    <a href="#" class="btn btn-primary">View</a>
+                    <a href="/cities/{{this._id}}" class="btn btn-primary">View</a>
                 </div>
             </div>
         {{/each}}
@@ -16,14 +16,14 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{this.name}}</h5>
                     <p class="card-text">Rating: {{this.rating}}</p>
-                    <a href="#" class="btn btn-primary">View</a>
+                    <a href="/attractions/{{this._id}}" class="btn btn-primary">View</a>
                 </div>
             </div>
         {{/each}}
     </div>
 </main>
-{{#if login}}
-    <p>User logged in {{login}}</p>
+{{#if userName}}
+    <p>User logged in {{userName}}</p>
 {{/if}}
 
 <div class="row">
