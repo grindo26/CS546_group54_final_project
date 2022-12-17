@@ -1,0 +1,27 @@
+<div class="review">
+    <h2>{{reviewObj.username}}</h2>
+    <h3>{{reviewObj.rating}}</h3>
+    <p>{{reviewObj.review}}</p>
+    <p>{{reviewObj._id}}</p>
+    <ul id="commentsList">
+        {{#each reviewObj.comments}}
+            <li>
+                <h4>{{commenterName}}
+                </h4>
+                <p>{{comment}}</p>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+
+<div id="comments">
+    <!-- comments will be inserted here -->
+    <form id="commentsForm">
+        <label for="commentText"> Post a comment:</label><br>
+        <textarea id="commentText" name="commentText" rows="4" cols="50"></textarea><br>
+        <button type="submit">Add Comment</button>
+    </form>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/public/js/reviews.js"></script>
