@@ -3,16 +3,17 @@
 <select id="filter">
   <option value="all">All</option>
   <option value="names">Names</option>
-  <option value="price">Price less than 25 </option>
-  <option value="rating">Rating</option>
+  <option value="$">$</option>
+   <option value="$$">$$ </option>
+    <option value="$$$">$$$ </option>
 </select>
 
 
 <div class="content">
       {{#each list2}}
-      <li><a id="nameli" href="/attractions/{{this._id}}">{{this.name}}</a></li>
-       <li id="priceli">{{this.price}}</li>
-       <li id="ratingli">{{this.rating}}</li>
+      <li><a class="nameli" href="/attractions/{{this._id}}">{{this.name}}</a></li>
+       <li class="priceli">{{this.price}}</li>
+       <li class="ratingli">{{this.rating}}</li>
        <br>
       {{/each}}
 </div>
@@ -22,7 +23,5 @@
 </div>
 
 
-<script id="cities" type="application/json">
-{{list2}}
-</script>
+
 <script src="../public/main.js"></script>
