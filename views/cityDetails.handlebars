@@ -1,57 +1,28 @@
 <h1>{{list1.name}}</h1>
 
-<div class="dropdown">
-    <div class="select">
-        <span class="selected">Filter</span>
-        <div class="caret"></div>
-</div>
-<ul class="menu">
-<li>
-    <button onclick="handleClick()" >Name</button> 
-</li> 
- <li>
-    <button onclick="filterObjects('price')">Price</button> 
-</li> 
-<li>
- <button  onclick="filterObjects('rating')">Rating</button>
-</li> 
-<li class="active">
-   <button onclick="filterObjects('all')">Show All</button>
-</li>
-</ul> 
-</div>
+<select id="filter">
+  <option value="all">All</option>
+  <option value="names">Names</option>
+  <option value="price">Price less than 25 </option>
+  <option value="rating">Rating</option>
+</select>
 
-<div class="box name">
- <ul>
+
+<div class="content">
       {{#each list2}}
-      <li><a href="/attractions/{{this._id}}">{{this.name}} </a></li>
+      <li><a id="nameli" href="/attractions/{{this._id}}">{{this.name}}</a></li>
+       <li id="priceli">{{this.price}}</li>
+       <li id="ratingli">{{this.rating}}</li>
+       <br>
       {{/each}}
-    </ul>
 </div>
 
-<div class="box price">
- <ul>
-      {{#each list2}}
-        <li><a href="/attractions/{{this._id}}">{{this.price}} </a></li>
-      {{/each}}
-    </ul>
-</div>
-
-<div class="box rating">
- <ul>
-      {{#each list2}}
-        <li><a href="/attractions/{{this._id}}">{{this.rating}} </a></li>
-      {{/each}}
-    </ul>
+<div class="content2">
+  <ul id="results"></ul>
 </div>
 
 
-
-
-
-
-
-
-
-
+<script id="cities" type="application/json">
+{{list2}}
+</script>
 <script src="../public/main.js"></script>
