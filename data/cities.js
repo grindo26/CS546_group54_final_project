@@ -8,16 +8,16 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     name = await helperFunc.execValdnAndTrim(name, "name");
     state = await helperFunc.execValdnAndTrim(state, "state");
     country = await helperFunc.execValdnAndTrim(country, "state");
-    await helperFunc.execValdnForArr(attractions, "attractions");
-    num_attractions = await helperFunc.execValdnAndTrim(num_attractions, "num_attractions");
-    num_reviews = await helperFunc.execValdnAndTrim(num_reviews, "num_reviews");
+   // await helperFunc.execValdnForArr(attractions, "attractions");
+    //num_attractions = await helperFunc.execValdnAndTrim(num_attractions, "num_attractions");
+    //num_reviews = await helperFunc.execValdnAndTrim(num_reviews, "num_reviews");
 
     // validation ends-----------------
     let newCity = {
         name: name,
         state: state,
         country: country,
-        attractions: attractions,
+        attractions: [],
         num_attractions: num_attractions,
         num_reviews: num_reviews,
     };
@@ -26,15 +26,31 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
     if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add a record into cities";
     const newId = insertInfo.insertedId.toString();
     newCity._id = newId;
-    // to insert id at the beginning
     const returnObj = Object.assign({ _id: newId }, newCity);
     return returnObj;
 };
 
 const getCityById = async (cityId) => {
-    const cityCollection = await mongoCollections.cities();
-    const city = await cityCollection.findOne({ _id: ObjectId(cityId) });
-    return city;
+const cityCollection = await mongoCollections.cities();
+const city = await cityCollection.findOne({_id: ObjectId(cityId)});
+return city;
+
+};
+
+const checkCity = async (name, state) => { 
+
+     const cityCollection = await mongoCollections.cities();
+
+    const checkReg = new RegExp(name, "i")
+    const checkReg2 = new RegExp(state, "i")
+    // const cityName = await cityCollection.findOne({name: {$regex: checkReg}}, {state: {$regex: state}});
+    // const cityState = await cityCollection.findOne({state: {$regex: checkReg2}});
+    const checkCity = await cityCollection.findOne({name: {$regex: checkReg}, state: {$regex: checkReg2}});
+
+    console.log("checkCity hai ye",checkCity)
+    if(checkCity == null){ return true }
+    else { return false}
+      
 };
 
 const getAllCities = async (num_cities) => {
@@ -59,7 +75,9 @@ const getAllCities = async (num_cities) => {
 };
 
 module.exports = {
-    createCity,
-    getCityById,
-    getAllCities,
+    createCity,getCityById,checkCity, getAllCities
 };
+
+
+
+

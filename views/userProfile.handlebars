@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>User Profile</title>
+        <style>
+            /* Styles for the tabbed interface */
+            .tabbed-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .tabbed-content>div {
+                display: none;
+                /* Hide all tab content by default */
+            }
+
+            .tabbed-content>div:first-child {
+                display: block;
+                /* Show the first tab content by default */
+            }
+
+            .tab-list {
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .tab-list li {
+                flex: 1;
+                text-align: center;
+                border: 1px solid #ccc;
+                border-bottom: 0;
+                background-color: #f1f1f1;
+                cursor: pointer;
+            }
+
+            .tab-list li.active {
+                background-color: #ddd;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>User Profile</h1>
+
+        <!-- Tabbed interface -->
+        <div class="tabbed-content">
+            <!-- Tab list -->
+            <ul class="tab-list">
+                <li class="active" data-tab="comments">Comments</li>
+                <li data-tab="reviews">Reviews</li>
+                <li data-tab="posts">Posts</li>
+            </ul>
+
+            <!-- Tab content -->
+            <div class="tab-content" id="comments">
+                <!-- Display the user's comments here -->
+            </div>
+            <div class="tab-content" id="reviews">
+                <!-- Display the user's reviews here -->
+            </div>
+            <div class="tab-content" id="posts">
+                <!-- Display the user's posts here -->
+            </div>
+        </div>
+
+        <script>
+            // JavaScript to handle tab switching
+            const tabList = document.querySelector('.tab-list');
+            const tabContent = document.querySelectorAll('.tab-content');
+
+            tabList.addEventListener('click', (event) => {
+                // Get the clicked tab
+                const clickedTab = event.target;
+
+                // Make sure the clicked element is a tab
+                if (clickedTab.tagName === 'LI') {
+                    // Remove the active class from all tabs
+                    tabList.querySelectorAll('li').forEach((tab) => {
+                        tab.classList.remove('active');
+                    });
+
+                    // Add the active class to the clicked tab
+                    clickedTab.classList.add('active');
+
+                    // Hide all tab content
+                    tabContent.forEach((content) => {
+                        content.style.display = 'none';
+                    });
+
+                    // Show the tab content for the clicked tab
+                    document.getElementById(clickedTab.dataset.tab).style.display = 'block';
+                }
+            });
+        </script>
+    </body>
+
+</html
