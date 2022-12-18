@@ -16,10 +16,11 @@
     <body>
         <nav class="navbar navbar-light bg-light" style="padding: 10px 0px;margin-bottom: 50px;">
             <div class="container-fluid">
-                <a class="navbar-brand" style="font-size: 150% ;"><strong>CITY SCANNER</strong></a>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <a class="navbar-brand" style="font-size: 150%;" href="/"><strong>CITY SCANNER</strong></a>
+                <form method="POST" action="/search/search" id="search-form" class="d-flex">
+                    <label for="searchInput"> </label>
+                    <input type="text" name="searchInput" id="searchInput" class="form-control me-2">
+                    <button id="submit" class="btn btn-outline-success"  type="submit">Submit</button>
                 </form>
 
                 <div class="dropdown">
