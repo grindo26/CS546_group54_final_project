@@ -28,5 +28,4 @@ router
             return res.status(500).render("searchPage", { error: e });
         }
     });
-
 module.exports = router;
