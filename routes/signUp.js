@@ -3,61 +3,52 @@ const router = express.Router();
 const data = require("../data");
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
-const bcrypt = require('bcryptjs');
-
+const bcrypt = require("bcryptjs");
 
 router
-.route("/")
-.get(async (req, res) => {
-   
-    if(req.session.user)   
-    {
-      return res.redirect('/');
-    }
-     else{
-      return res.render('userRegister', {title: "Registeration Page"});
-         }
-})
-.post(async (req, res) => {
+    .route("/")
+    .get(async (req, res) => {
+        if (req.session.user) {
+            return res.redirect("/");
+        } else {
+            return res.render("userRegister", { title: "Registeration Page" });
+        }
+    })
+    .post(async (req, res) => {
+        try {
+            let name = req.body.nameInput;
+            let age = req.body.ageInput;
+            let username = req.body.usernameInput;
+            let email = req.body.emailInput;
+            let password = req.body.passwordInput;
 
- try{
-  
- let name = req.body.nameInput;  
- let age= req.body.ageInput; 
- let username = req.body.usernameInput;
- let email = req.body.emailInput;
- let password = req.body.passwordInput;
-   
-  await helperFunc.execValdnAndTrim(name, "name")
-  await helperFunc.execValdnAndTrim(age, "age")
-  await helperFunc.execValdnAndTrim(username, "username")
-  await helperFunc.execValdnAndTrim(email, "email")
-  await helperFunc.execValdnAndTrim(password, "password")
+            await helperFunc.execValdnAndTrim(name, "name");
+            await helperFunc.execValdnAndTrim(age, "age");
+            await helperFunc.execValdnAndTrim(username, "username");
+            await helperFunc.execValdnAndTrim(email, "email");
+            await helperFunc.execValdnAndTrim(password, "password");
 
-  username = username.toLowerCase();
+            username = username.toLowerCase();
 
-  await helperFunc.isNameValid(name, "name")
-  await helperFunc.isAgeValid(age, "age");
-  await helperFunc.isUsernameValid(username, "username");
-  await helperFunc.isEmailValid(email, "email");
-  await helperFunc.isPasswordValid(password, "password");
- 
-  const create = await data.usersData.createUser(name,username,email,age,password);
-    if(create) {
-    return res.redirect('/login');
-    } else{
-      throw "Internal Server Error";
-    }
+            await helperFunc.isNameValid(name, "name");
+            await helperFunc.isAgeValid(age, "age");
+            await helperFunc.isUsernameValid(username, "username");
+            await helperFunc.isEmailValid(email, "email");
+            await helperFunc.isPasswordValid(password, "password");
 
-   }
-   catch(e){
-    if(e == "Internal Server Error") {
-      return res.status(500).render('forbiddenAccess', {title: "Forbidden Access Page",error:"Error status 500: "+e});
-    } else{
-      return res.status(400).render('userRegister', {title: "Registeration Page",error:"Error status 400: "+e});
-    }
-    }
-
-  })
+            const create = await data.usersData.createUser(name, username, email, age, password);
+            if (create) {
+                return res.redirect("/login");
+            } else {
+                throw { statusCode: 404, message: "Internal Server Error" };
+            }
+        } catch (e) {
+            if (e == "Internal Server Error") {
+                return res.status(500).render("forbiddenAccess", { title: "Forbidden Access Page", error: "Error status 500: " + e });
+            } else {
+                return res.status(400).render("userRegister", { title: "Registeration Page", error: "Error status 400: " + e });
+            }
+        }
+    });
 
 module.exports = router;

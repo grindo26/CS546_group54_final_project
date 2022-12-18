@@ -29,6 +29,22 @@ app.use(
     })
 );
 
+app.use("/login", async (req, res, next) => {
+    if (req.session.user) {
+        return res.redirect("/user/userProfile");
+    } else {
+        next();
+    }
+});
+
+app.use("/signUp", async (req, res, next) => {
+    if (req.session.user) {
+        return res.redirect("/user/userProfile");
+    } else {
+        next();
+    }
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
