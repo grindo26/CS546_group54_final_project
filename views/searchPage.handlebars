@@ -1,41 +1,46 @@
-<h2>SEARCHING FOR SOMETHING?</h2>
-<p>{{error}}</p>
-<form method="POST" action="#" id="search-form">
-    <label for="searchInput"> Enter to Search Something: </label>
-    <input type="text" name="searchInput" id="searchInput" size="50">
-    <br>
-
-    <button id="submit" type="submit">Submit</button>
-</form>
-
-<div class="cityContent">
+<div class="container" style="margin-bottom: 100px;">
+<div class="row">
+<div class="col-sm">
     {{#if list1}}
-        <h2>Cities</h2>
+     
+        <h2 class="card-header">Cities</h2>
         {{#each list1}}
-            <li><a href="/cities/{{this._id}}">{{this.name}}</a></li>
-            <p>{{this.state}}</p>
-            <p>{{this.country}}</p>
-            <p>{{this.num_attractions}}</p>
-            <br>
+        <div class="card-body shadow-sm">
+            <h5 class="card-title"><a href="/cities/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
+            <p class="card-text"><b>{{this.state}} | {{this.country}} | {{this.num_attractions}}</b></p>
+        </div>
         {{/each}}
+  
     {{else}}
     {{/if}}
 </div>
+</div>
+</div>
 
-<div class="attrContent">
+<div class="container" style="margin-bottom: 100px;">
+<div class="row">
+<div class="col-sm">
     {{#if list2}}
-        <h2>Attractions</h2>
+        <h5 class="card-header">Attractions</h2>
         {{#each list2}}
-            <li><a href="/attractions/{{this._id}}">{{this.name}}</a></li>
-            <p>{{this.rating}}</p>
-            <p>{{this.price}}</p>
-            <br>
+        <div class="card-body shadow-sm">
+            <h5 class="card-title"><a href="/attractions/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
+            <p class="card-text"><b>{{this.rating}} | {{this.price}}
+        </div>
+
         {{/each}}
     {{else}}
     {{/if}}
 </div>
-
-<div>
-    <p><a href="/cities/addCity">Add City</a></p>
-    <p><a href="/attractions">Add Attraction</a></p>
 </div>
+</div>
+
+
+<div class="container">
+<div class="row" style="margin-bottom: 100px;">
+    <a href="/cities/addCity"role="button" class="btn btn-primary btn-lg btn-block" >Add City</a>
+    <a href="/attractions" role="button" class="btn btn-secondary btn-lg btn-block" >Add Attraction</a>
+</div>
+</div>
+
+<p>{{error}}</p>
