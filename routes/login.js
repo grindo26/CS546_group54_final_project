@@ -35,7 +35,6 @@ router
             }
    //         return res.status(200).redirect('/user/userProfile')
         } catch (e) {
-            console.log(e)
             return res.status(e.statusCode).render("userLogin", { title: "Login Page", message: e.message });
         }
     });
