@@ -1,16 +1,31 @@
-<h2>Add City</h2> 
-<p>{{error}}</p>
-<form method="POST" action="#" id="city-form">
-                <label for="nameInput">  Enter Name: </label>
-                 <input type="text" name="nameInput" id="nameInput" size="50" >
-             <br>
+<div class="header">
+    <h1>ADD CITY</h1>
+</div>
 
-                <label for="stateInput" > Enter State:</label>
-                <input type="text" name="stateInput" id="stateInput" size="50">
+    <p>{{error}}</p>
+<div class="container">
 
-            <br>
+<form class="form-style-7" method="POST" action="#" id="city-form">
+    <ul class="shadow">
+        <li class="shadow-sm">
+            <label for="nameInput">  Enter Name: </label>
+            <input type="text" name="nameInput" id="nameInput">
+            <span>Enter your username</span>
+        </li>
+        <li class="shadow-sm">
+            <label for="stateInput" > Enter State:</label>
+            <input type="text" name="stateInput" id="stateInput">
+            <span>Enter your password</span>
+        <li class="shadow-sm">
             <label for="countryInput" > Enter Country:</label>
-            <input type="text" name="countryInput" id="countryInput" size="50">
-
-                  <button type="submit">Submit</button>
- </form>
+            <input type="text" name="countryInput" id="countryInput">
+            <span>Enter your username</span>
+        </li >
+        <li>
+            <input type="submit" value="Log In" class="shadow">
+            - or - 
+            <a href="/signUp"><input type="button" value="Signup" class="shadow"></a>
+        </li>
+    </ul>
+</form>
+</div>

@@ -1,14 +1,38 @@
-<p>{{error}}</p>
-<title>{{title}}</title>
-<p id="error">{{error}}</p>
-<p> Enter a username and password to sign up </p>
-<form method="POST" action="/login" id="login-form">
-    <label for="usernameInput"> Username:</label><br>
-    <input type="text" id="usernameInput" name="usernameInput"><br>
-    <label for="passwordInput"> Password:</label><br>
-    <input type="password" id="passwordInput" name="passwordInput"><br>
-    <button type="submit">Sign in</button>
-</form>
 
-<a href="/signUp">Click here to sign-up!</a>
+<div class="header">
+    <h1>LOGIN</h1>
+</div><p>{{error}}</p>
+<div class="container">
+    <title>{{title}}</title>
+    <p id="error">{{error}}</p>
+    {{!-- 
+    <form method="POST" action="/login" id="login-form">
+        <label for="usernameInput"> Username:</label>
+        <input type="text" id="usernameInput" name="usernameInput">
+        <label for="passwordInput"> Password:</label>
+        <input type="password" id="passwordInput" name="passwordInput">
+        <button type="submit">Sign in</button>
+    </form>
+    --}}
+
+    <form class="form-style-7" method="POST" action="\login" id="login-form">
+        <ul class="shadow">
+            <li>
+                <label for="usernameInput">Username</label>
+                <input id="usernameInput" name="usernameInput" type="text" maxlength="100">
+                <span>Enter your username</span>
+            </li>
+            <li>
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" name="passwordInput"maxlength="100">
+                <span>Enter your password</span>
+            <li>
+                <input type="submit" value="Log In">
+                - or - 
+                <a href="/signUp"><input type="button" value="Signup"></a>
+            </li>
+        </ul>
+    </form>
+</div>
+
 <script src="../public/zjs/login.js"></script>

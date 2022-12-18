@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light bg-light" style="padding: 10px 0px;margin-bottom: 50px;">
+        <nav class="navbar navbar-light sticky-top bg-light" style="padding: 10px 0px;">
             <div class="container-fluid">
                 <a class="navbar-brand" style="font-size: 150%;" href="/"><strong>CITY SCANNER</strong></a>
                 <form method="POST" action="/search/search" id="search-form" class="d-flex">
@@ -26,9 +26,14 @@
                 <div class="dropdown">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                         class="rounded-circle img-fluid shadow dropimg" style="width: 50px;">
-                    <div class="dropdown-content">
-                        <a href="#">Login</a>
-                        <a href="#">Signup</a>
+                    <div class="dropdown-content dropdown-menu dropdown-menu-right">
+                        
+                        <a href="/login">Login</a>
+                        <a href="/signup">Signup</a>
+                        <a href="/">Home</a>
+                        <a href="/user/userProfile">User Profile</a>
+                        <a href="/cities/addCity">Add City</a>
+                        <a href="/attractions">Add Attraction</a>
                     </div>
                 </div>
             </div>
