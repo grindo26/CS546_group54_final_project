@@ -1,4 +1,7 @@
 <h1>{{list1.name}}</h1>
+<p>{{list1.state}}</p>
+<p>{{list1.country}}</p>
+<p>{{list1.num_attractions}}</p>
 
 <select id="filter">
   <option value="all">All</option>
@@ -18,19 +21,22 @@
 
 
 <div class="content">
+  {{#if list2}}
       {{#each list2}}
-      <li><a id="a"  class="nameli" href="/attractions/{{this._id}}">{{this.name}}</a></li>
+      <li><a id="a"  class="nameli" href="/attractions/{{this.cityId}}">{{this.name}}</a></li>
        <li class="priceli">{{this.price}}</li>
        <li class="ratingli">{{this.rating}}</li>
        <li class="tagli">{{this.tags}}</li>
        <br>
       {{/each}}
+      {{else}}
+    {{/if}}
 </div>
 
 <div class="content2">
   <ul id="results"></ul>
 </div>
 
-
+<li>{{error}}</li>
 
 <script src="../public/main.js"></script>
