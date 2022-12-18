@@ -15,6 +15,8 @@ $(document).ready(function () {
     }
 
     getCities().then(populateDropdown);
-    var input = document.getElementById("locationInput");
-    var autocomplete = new google.maps.places.Autocomplete(input);
+
+
+    // var input = document.getElementById("locationInput");
+    // var autocomplete = new google.maps.places.Autocomplete(input);
 });
