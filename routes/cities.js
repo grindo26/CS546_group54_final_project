@@ -21,7 +21,6 @@ router
         try {
             return res.status(200).render("addCity", { title: "Add City" });
         } catch (e) {
-            console.log(e, "e");
             return res.status(500).json("Nope still not working");
         }
     })
@@ -49,7 +48,6 @@ router.route("/:cityId").get(async (req, res) => {
         const attrList = await attractionData.getAllAttraction(cityId.toString());
         return res.status(404).render("cityDetails", { list1: cityList, list2: attrList });
     } catch (e) {
-        console.log(e, "e");
         return res.status(500).json("Couldn't get the city and attractions");
     }
 });

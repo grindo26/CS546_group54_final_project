@@ -1,40 +1,53 @@
+<div class="header">
+    <h1>ADD ATTRACTION</h1>
+</div>
 <p>{{error}}</p>
 <title>{{title}}</title>
-<p id="error"></p>
-<p> Add an attraction </p>
-<form method="POST" action="/attractions" id="attraction-form" enctype="multipart/form-data">
-    <label for="attractionInput"> Name:</label><br>
-    <input type="text" id="attractionInput" name="attractionInput"><br>
-    <label for="cityInput">Choose a city:</label><br>
-    <select id="cityInput" name="cityInput">
-        <option value="">----Select an option------</option>
-    </select>
-    <label for="priceInput">Price:</label><br>
-    <select name="priceInput" id="priceInput">
-        <option value="$">$</option>
-        <option value="$$">$$</option>
-        <option value="$$$">$$$</option>
-    </select> <br>
-
-    <label for="locationInput"> Enter your location:</label><br>
-    <input type="text" id="locationInput" name="locationInput"><br>
-    <br>
-    <label for="Tag1">Indoor Activity</label>
-    <input type="checkbox" id="Tag1" name="Tags" value="Indoor Activity">
-    <br>
-    <label for="Tag2">Outdoor Activity</label>
-    <input type="checkbox" id="Tag2" name="Tags" value="Outdoor Activity">
-    <br>
-    <label for="Tag3">Monument</label>
-    <input type="checkbox" id="Tag3" name="Tags" value="Monument">
-    <br>
-    <label for="Tag4">Parks and Activities</label>
-    <input type="checkbox" id="Tag4" name="Tags" value="Parks">
-    <br>
-    <label for="attrImg">Select an image:</label><br>
-    <input type="file" id="attrImg" name="attrImg">
-    <button type="submit">Submit</button>
-</form>
+<div class="container">
+    <form class="form-style-7" method="POST" action="/attractions" id="attraction-form" enctype="multipart/form-data">
+        <ul class="shadow" style="padding:40px;">
+            <li>
+                <label for="attractionInput"> Name:</label>
+                <input type="text" id="attractionInput" name="attractionInput">
+            </li>
+            <li>
+                <label for="cityInput">Choose a city:</label>
+                <select id="cityInput" name="cityInput">
+                    <option value="">----Select an option------</option>
+                </select>
+            </li>
+            <li>
+                <label for="priceInput">Price:</label>
+                <select name="priceInput" id="priceInput">
+                    <option value="$">$</option>
+                    <option value="$$">$$</option>
+                    <option value="$$$">$$$</option>
+                </select>
+            </li>
+            <li>
+                <label for="locationInput"> Enter your location:</label>
+                <input type="text" id="locationInput" name="locationInput">
+            </li>
+            <li>
+                <label for="Tag1">Indoor Activity</label>
+                <input type="checkbox" id="Tag1" name="Tags" value="Indoor Activity">
+                <label for="Tag2">Outdoor Activity</label>
+                <input type="checkbox" id="Tag2" name="Tags" value="Outdoor Activity">
+                <label for="Tag3">Monument</label>
+                <input type="checkbox" id="Tag3" name="Tags" value="Monument">
+                <label for="Tag4">Parks and Activities</label>
+                <input type="checkbox" id="Tag4" name="Tags" value="Parks">
+            </li>
+            <li>
+                <label for="attrImg">Select an image:</label>
+                <input type="file" id="attrImg" name="attrImg">
+            </li>
+            <li>
+                <input type="submit">
+            </li>
+        </ul>
+    </form>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/addAttractions.js"></script>

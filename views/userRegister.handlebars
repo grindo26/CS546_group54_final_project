@@ -1,21 +1,41 @@
-<p>{{error}}</p>
-<title>{{title}}</title>
-    <p id="error"></p>
-    <p> Enter a username and password to sign up </p>
-    <form method="POST" action="/signUp" id="registration-form"> 
-    <label for="nameInput"> Name:</label><br>
-    <input type="text" id="nameInput" name="nameInput"><br>
-    <label for="ageInput"> Age:</label><br>
-    <input type="text" id="ageInput" name="ageInput"><br>
-    <label for="usernameInput"> Username:</label><br>
-    <input type="text" id="usernameInput" name="usernameInput"><br>
-    <label for="emailInput"> Email:</label><br>
-    <input type="text" id="emailInput" name="emailInput"><br>
-    <label for="passwordInput"> Password: </label><br>
-    <input type="password" id="passwordInput" name="passwordInput"><br>
-    <button type="submit">SignUp!</button>
+<div class="header">
+    <h1>SIGNUP</h1>
+</div>
+<p class="text-center error">{{error}}</p>
+<div class="container">
+    <title>{{title}}</title>
+    <form class="form-style-7" method="POST" action="\signUP" id="registration-form">
+        <ul class="shadow">
+            <li>
+                <label for="nameInput"> Name:</label>
+                <input type="text" id="nameInput" name="nameInput" maxlength="100" required>
+                <span>Enter your Name</span>
+            </li>
+            <li>
+                <label for="ageInput"> Age:</label>
+                <input type="text" id="ageInput" name="ageInput" maxlength="100" required>
+                <span>Enter your Age</span>
+            </li>
+            <li>
+                <label for="usernameInput"> Username:</label>
+                <input type="text" id="usernameInput" name="usernameInput" maxlength="100" required>
+                <span>Enter your Username</span>
+            </li>
+            <li>
+                <label for="emailInput"> Email:</label>
+                <input type="text" id="emailInput" name="emailInput" maxlength="100" required>
+                <span>Enter your Email</span>
+            </li>
+            <li>
+                <label for="passwordInput"> Password: </label>
+                <input type="password" id="passwordInput" name="passwordInput" maxlength="100" required>
+                <span>Enter your Password</span>
+            <li>
+                <input type="submit" value="Sign Up">
+                - or - 
+                <a href="/login"><input type="button" value="LogIn"></a>
+            </li>
+        </ul>
     </form>
-
-<a href="/">Already have an account? Click here to log-in</a>
- <script src="../public/js/signUp.js"></script>
-
+</div>
+<script src="../public/js/signUp.js"></script>
