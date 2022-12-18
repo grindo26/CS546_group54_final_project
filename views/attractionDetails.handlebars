@@ -1,8 +1,15 @@
-<p> Get detailed info about the attraction here: </p>
-<title>{{title}}</title>
-<p>Name: {{singleAttraction.name}}</p>
+
+<div class="header-content">
+    <h1>{{singleAttraction.name}}</h1>
+    <p></p>
+</div>
+
+{{!-- <title>{{title}}</title> --}}
+
+<p>{{singleAttraction}}</p>
+<img src="data:image/jpg;base64,{{singleAttraction.photo}}" />
 <p>Reviews: {{singleAttraction.reviews}}</p>
-<img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="200" width="200"/>
+
 <p>Rating: {{singleAttraction.rating}}</p>
 <p>Price: {{singleAttraction.price}}</p>
 

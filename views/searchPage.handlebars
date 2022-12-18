@@ -1,4 +1,7 @@
-<div class="container" style="margin-bottom: 100px;">
+<div class="header">
+    <h1>Explore</h1>
+</div>
+<div class="container" style="margin-bottom: 50px; margin-top:30px;">
 <div class="row">
 <div class="col-sm">
     {{#if list1}}
@@ -7,7 +10,7 @@
         {{#each list1}}
         <div class="card-body shadow-sm">
             <h5 class="card-title"><a href="/cities/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
-            <p class="card-text"><b>{{this.state}} | {{this.country}} | {{this.num_attractions}}</b></p>
+            <p class="card-text"><b>{{this.state}} | {{this.country}} | Total Attractions : {{this.num_attractions}}</b></p>
         </div>
         {{/each}}
   
@@ -17,7 +20,7 @@
 </div>
 </div>
 
-<div class="container" style="margin-bottom: 100px;">
+<div class="container" style="margin-bottom: 100px; margin-top:30px;">
 <div class="row">
 <div class="col-sm">
     {{#if list2}}
@@ -43,4 +46,3 @@
 </div>
 </div>
 
-<p>{{error}}</p>
