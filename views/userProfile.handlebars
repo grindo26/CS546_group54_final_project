@@ -1,9 +1,43 @@
-<!doctype html>
-<html>
+<title>{{title}}</title>
+<h1>User Profile</h1>
+<p>Name: {{user.name}}</p>
+<p>Username: {{user.username}}</p>
+<p>Email: {{user.email}}</p>
+<p>Age: {{user.age}}</p>
 
-    <head>
-        <title>User Profile</title>
-        <style>
+     <!-- Tabbed interface -->
+        <div class="tabbed-content">
+            <!-- Tab list -->
+            <ul class="tab-list">
+                <li class="active" data-tab="comments">Comments</li>
+                <li data-tab="reviews">Reviews</li>
+                <li data-tab="posts">Posts</li>
+            </ul>
+
+            <!-- Tab content -->
+            <div class="tab-content" id="comments">
+                <!-- Display the user's comments here -->
+                 <p>Comments added by you:</p>
+                    {{#each displayComments}}
+                   <p>{{this.commentorId}}</p>   
+                {{/each}} 
+            </div>
+            <div class="tab-content" id="reviews">
+                <!-- Display the user's reviews here -->
+                 <p>Reviews added by you:</p>
+                  {{#each displayReviews}}
+                   <p>{{this.review}}</p>   
+                {{/each}} 
+            </div>
+          <div class="tab-content" id="posts">
+              <p>Attractions added by you:</p>
+                {{#each displayAttractions}}
+                   <p>{{this.name}}</p>   
+                {{/each}} 
+            </div>
+        </div>
+
+          <style>
             /* Styles for the tabbed interface */
             .tabbed-content {
                 display: flex;
@@ -40,31 +74,6 @@
                 background-color: #ddd;
             }
         </style>
-    </head>
-
-    <body>
-        <h1>User Profile</h1>
-
-        <!-- Tabbed interface -->
-        <div class="tabbed-content">
-            <!-- Tab list -->
-            <ul class="tab-list">
-                <li class="active" data-tab="comments">Comments</li>
-                <li data-tab="reviews">Reviews</li>
-                <li data-tab="posts">Posts</li>
-            </ul>
-
-            <!-- Tab content -->
-            <div class="tab-content" id="comments">
-                <!-- Display the user's comments here -->
-            </div>
-            <div class="tab-content" id="reviews">
-                <!-- Display the user's reviews here -->
-            </div>
-            <div class="tab-content" id="posts">
-                <!-- Display the user's posts here -->
-            </div>
-        </div>
 
         <script>
             // JavaScript to handle tab switching
@@ -76,7 +85,7 @@
                 const clickedTab = event.target;
 
                 // Make sure the clicked element is a tab
-                if (clickedTab.tagName === 'LI') {
+                    if (clickedTab.tagName === 'LI') {
                     // Remove the active class from all tabs
                     tabList.querySelectorAll('li').forEach((tab) => {
                         tab.classList.remove('active');
@@ -95,6 +104,4 @@
                 }
             });
         </script>
-    </body>
-
-</html
+ 

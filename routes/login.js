@@ -9,6 +9,9 @@ router
     .route("/")
     .get(async (req, res) => {
         try {
+            if(req.session.user) {
+                return res.redirect("/user/userProfile");
+            }
             return res.render("userLogin", { title: "Login page" });
         } catch (e) {
             return res.status(404).json("Couldn't load home page");
@@ -27,10 +30,12 @@ router
             if (create.authenticatedUser) {
                 req.session.user = username;
                 req.session.userId = create.userId;
-                res.redirect(req.session.returnTo || "/");
-                delete req.session.returnTo;
+                return res.redirect(req.session.returnTo || "/user/userProfile");
+      ///       delete req.session.returnTo;
             }
+   //         return res.status(200).redirect('/user/userProfile')
         } catch (e) {
+            console.log(e)
             return res.status(e.statusCode).render("userLogin", { title: "Login Page", message: e.message });
         }
     });

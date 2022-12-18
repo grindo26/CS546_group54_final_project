@@ -19,7 +19,7 @@ const constructorMethod = (app) => {
     app.use("/search", searchRoutes);
     app.use("/logout", logoutRoutes);
     app.use("*", (req, res) => {
-        res.sendStatus(404);
+        return res.sendStatus(404);
     });
 };
 
