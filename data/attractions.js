@@ -82,9 +82,23 @@ const getPopularAttractions = async (num_attractions) => {
     return l_arrAttractions;
 };
 
+const getAttractionsfromAttractionIdArr = async (attrIdArr) => {
+    
+    const arr=[];
+    for(i=0; i<attrIdArr.length;i++){
+      let b = ObjectId(attrIdArr[i])
+      arr.push(b)
+   }
+
+   const attractionsCollection = await mongoCollections.attractions();
+   const attractionsArr = await attractionsCollection.find({ _id: {$in: arr}},{projection: {_id: 1, name:1}}).toArray();
+   return attractionsArr;
+}
+
 module.exports = {
     createAttraction,
     getAllAttraction,
     getAttractionById,
     getPopularAttractions,
+    getAttractionsfromAttractionIdArr
 };

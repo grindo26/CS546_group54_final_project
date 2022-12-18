@@ -55,7 +55,7 @@ const isUserLoggedInReturnsLogin = async (req) => {
 
 const isNameValid = async (name, fieldName) => {
     if (name.trim().length < 3) throw { statusCode: 400, message: `${fieldName} should atleast have 3 characters` };
-    if (!/^[a-z ,.'-]+$/.test(name)) throw { statusCode: 400, message: `${fieldName} contains invalid characters` };
+    if (!/^[a-zA-Z ,.'-]+$/.test(name)) throw { statusCode: 400, message: `${fieldName} contains invalid characters` };
 };
 
 const isAgeValid = async (age, fieldName) => {

@@ -22,7 +22,7 @@ router
     let searchString = req.body.searchInput
     try{
         searchString = await helperFunc.execValdnAndTrim(searchString, "searchbar")
-        searchString = await helperFunc.isNameVald(searchString, "searchbar")
+        searchString = await helperFunc.isNameValid(searchString, "searchbar")
         const searchForCity = await searchingData.searchCity(searchString);
         const searchForAttraction = await searchingData.searchAttraction(searchString)
         return res.status(200).render('searchPage',{list1 : searchForCity , list2: searchForAttraction})

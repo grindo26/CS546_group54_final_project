@@ -83,7 +83,7 @@ const checkUser = async (username, password) => {
     await helperFunc.isPasswordValid(password, "password");
     const userCollection = await mongoCollections.users();
     let usernameRegex = new RegExp(username, "i");
-    const userObj = await userCollection.find({ username: { $regex: usernameRegex } });
+    const userObj = await userCollection.findOne({ username: { $regex: usernameRegex } });
     if (!userObj || userObj === null || userObj === undefined) throw { statusCode: 400, message: "Either the username or password is invalid" };
     let comparePassword = await bcrypt.compare(password, userObj.password);
     if (comparePassword) {
@@ -92,6 +92,7 @@ const checkUser = async (username, password) => {
         throw { statusCode: 400, message: "Either the username or password is invalid" };
     }
 };
+
 
 module.exports = {
     createUser,
