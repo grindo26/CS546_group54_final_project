@@ -52,7 +52,6 @@ const getReviewById = async (id) => {
 };
 
 const getReviewsByReviewIdArr = async (reviewIdArr) => {
-    console.log(reviewIdArr, "This is the review id array I am getting on data/review")
     
     const revArr=[];
     for(i=0; i<reviewIdArr.length;i++){
