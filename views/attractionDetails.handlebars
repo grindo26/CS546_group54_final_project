@@ -1,14 +1,24 @@
-<p> Get detailed info about the attraction here: </p>
-<title>{{title}}</title>
-<p>Name: {{singleAttraction.name}}</p>
+<div class="header-content">
+    <h1>{{singleAttraction.name}}</h1>
+    <p></p>
+</div>
+
+{{!-- <title>{{title}}</title> --}}
+
+<p>{{singleAttraction}}</p>
+<img src="data:image/jpg;base64,{{singleAttraction.photo}}" />
 <p>Reviews: {{singleAttraction.reviews}}</p>
-<img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="200" width="200"/>
+
 <p>Rating: {{singleAttraction.rating}}</p>
 <p>Price: {{singleAttraction.price}}</p>
 
-<p>Location: {{singleAttraction.location}}</p>
+{{!-- TODO Display map here --}}
+{{!-- <p>Location: {{singleAttractions}}</p> --}}
+<div id="map"></div>
 
 <button id="get-review-form-button">Add a review!</button>
 
+
+<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/attractions.js"></script>
