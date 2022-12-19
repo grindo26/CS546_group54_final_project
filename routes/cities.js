@@ -58,7 +58,6 @@ router.route("/:cityId").get(async (req, res) => {
         const cityList = await cityData.getCityById(cityId);
         const attrList = await attractionData.getAllAttraction(cityId.toString());
         return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: 'City Insights'});
-
     } catch (e) {
         return res.status(500).render('error');
     }
