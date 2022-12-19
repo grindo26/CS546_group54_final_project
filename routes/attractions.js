@@ -27,7 +27,9 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
         let rating = 0;
         // TODO: when selecting one tag, an array isn't passed. Handle
         let tags = req.body.Tags;
-
+        if (!req.session.user) {
+            return res.status(401).render("userLogin", { message: "You must be logged in to post a comment", title: "Login" });
+        }
         name = await helperFunc.execValdnAndTrim(name, "Attraction Name");
         cityId = await helperFunc.execValdnAndTrim(cityId, "City Id");
         if (!ObjectId.isValid(cityId)) {

@@ -29,6 +29,9 @@ router
         let state = req.body.stateInput;
         let country = req.body.countryInput;
         try {
+            if (!req.session.user) {
+                return res.status(401).render("userLogin", { message: "You must be logged in to post a comment", title: "Login" });
+            }
             const checkif = await cityData.checkCity(name, state);
             if (checkif == true) {
                 const newCity = await cityData.createCity(name, state, country);
@@ -48,7 +51,7 @@ router.route("/:cityId").get(async (req, res) => {
         const attrList = await attractionData.getAllAttraction(cityId.toString());
         return res.status(404).render("cityDetails", { list1: cityList, list2: attrList });
     } catch (e) {
-        return res.status(500).json("Couldn't get the city and attractions");
+        return res.status(500).render('error');
     }
 });
 

@@ -67,6 +67,27 @@ const getReviewsByReviewIdArr = async (reviewIdArr) => {
    return reviewArr;
 };
 
+const updateReview = async (
+    userId, attractionId, review
+  ) => {
+    const reviewCollection = await mongoCollections.reviews();
+    let tempReview = await attractionsData.getAttractionById(attractionId)
+
+    let updatedReview = {
+        review: review,
+    };
+
+    const updatedInfo = await reviewCollection.updateOne(
+        {_id: ObjectId(attractionId)},
+        {$set: updatedReview}
+    )
+    if (updatedInfo.modifiedCount == 0) {
+        throw 'could not update movie successfully';
+      }
+      
+      console.log(updatedInfo, "updated info hai ye");
+  }
+
 // const getCommentsbyFindingInReviewCollection = async () => {
 
 //     const commentObj = await movieCollection.findOne({ comments: { $elemMatch: {commentorId: "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310" } }, },
@@ -84,5 +105,5 @@ const getReviewsByReviewIdArr = async (reviewIdArr) => {
 module.exports = {
     createReview,
     getReviewById,
-    getReviewsByReviewIdArr
+    getReviewsByReviewIdArr, updateReview
 };

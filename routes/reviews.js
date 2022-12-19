@@ -61,7 +61,8 @@ router.route("/comments/").post(async (req, res) => {
     }
 });
 
-router.route("/:attractionId").post(async (req, res) => {
+router.route("/:attractionId")
+.post(async (req, res) => {
     let attractionId = req.params.attractionId;
     let reviewText = req.body.reviewTxt;
     let rating = req.body.rating;
@@ -95,8 +96,8 @@ router.route("/:attractionId").post(async (req, res) => {
     } catch (error) {
         return res.status(error.statusCode).render("error", { title: "Error", status: error.statusCode, message: error.message });
     }
+    
 });
-
 router.route("/:reviewId").get(async (req, res) => {
     let reviewId = req.params.reviewId;
     try {
@@ -119,6 +120,49 @@ router.route("/:reviewId").get(async (req, res) => {
         //     return res.status(401).render("userLogin", { message: "You must be logged in to post a comment", title: "Login" });
         // }
         return res.status(200).render("reviewDetails", { reviewObj: l_objReview, title: "Review" });
+    } catch (error) {
+        return res.status(error.statusCode).render("error", { title: "Error", status: error.statusCode, message: error.message });
+    }
+});
+router
+router.route("/editReview/:attractionId")
+.get(async (req, res) => {
+    try {
+        return res.status(200).render("editReview", { title: "Edit Review" });
+    } catch (e) {
+        return res.status(500).json("Nope still not working");
+    }
+})
+.post(async (req, res) => {
+    let attractionId = req.params.attractionId;
+    let reviewText = req.body.reviewTxt;
+    //try {
+        //code to validate id
+       // attractionId = await helperFunc.execValdnAndTrim(attractionId);
+        //rating = await helperFunc.execValdnAndTrim(rating, "rating");
+        //rating = await helperFunc.validateRating(rating);
+        //if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: `attractionId provided is not a valid ObjectId` };
+        //reviewText = await helperFunc.execValdnAndTrim(reviewText, "review");
+        //if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: `Id provided is not a valid ObjectId` };
+    //} //catch (error) {
+        //return res.status(error.statusCode).render("error", { title: "Error", status: error.statusCode, message: error.message });
+ //   }
+    try {
+        //code to check if attraction with this id exists
+        let l_objAttraction = await data.attractionsData.getAttractionById(attractionId);
+        // if (!l_objAttraction || l_objAttraction === null || l_objAttraction === undefined) {
+        //     throw { statusCode: 404, message: `No attraction exists with that id` };
+        // }
+        //hardcoding for testing
+        // req.session.userId = "63932e0f542402fac0ee0011";
+        // req.session.user = "Dipankar";
+        // if (!req.session.userId) {
+        //     return res.status(401).render("userLogin", { message: "You must be logged in to post a review", title: "Login" });
+        // }
+        let l_objReview = await data.reviewsData.updateReview(attractionId, reviewText);
+        //let returnObj = Object.assign(l_objReview, { username: req.session.user });
+        //req.session.reviewId = returnObj._id;
+        return res.status(200).redirect("/attractions/" + l_objAttraction._id);
     } catch (error) {
         return res.status(error.statusCode).render("error", { title: "Error", status: error.statusCode, message: error.message });
     }
