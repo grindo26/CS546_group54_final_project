@@ -1,8 +1,8 @@
+
 <div class="header">
     <h1>ADD ATTRACTION</h1>
 </div>
 <p>{{error}}</p>
-<title>{{title}}</title>
 <div class="container">
     <form class="form-style-7" method="POST" action="/attractions" id="attraction-form" enctype="multipart/form-data">
         <ul class="shadow" style="padding:40px;">
@@ -29,14 +29,12 @@
                 <input type="text" id="locationInput" name="locationInput">
             </li>
             <li>
-                <label for="Tag1">Tags</label><br>
-                <input type="checkbox" id="Tag1" name="Tags" value="Indoor Activity"> Indoor<br>
-
+                <label for="Tag1"> Tags</label><br>
+                <input type="checkbox" id="Tag1" name="Tags" value="Indoor Activity">Indoor<br>
                 <input type="checkbox" id="Tag2" name="Tags" value="Outdoor Activity">Outdoor<br>
-
                 <input type="checkbox" id="Tag3" name="Tags" value="Monument">Monument<br>
+                <input type="checkbox" id="Tag4" name="Tags" value="Parks"> Parks and Activities<br>
 
-                <input type="checkbox" id="Tag4" name="Tags" value="Parks">Parks
             </li>
             <li>
                 <label for="attrImg">Select an image:</label>

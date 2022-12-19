@@ -159,7 +159,7 @@ dl{
 
 #map {
   height: 400px; /* The height is 400 pixels */
-  width: 40%; /* The width is the width of the web page */
+  width: 100%; /* The width is the width of the web page */
 }
 
 .show{
@@ -220,16 +220,12 @@ dl{
   display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropimg {background-color: #3e8e41;}
 
-/* Form CSS */
 .form-style-7{
 	max-width:420px;
 	margin:50px auto;
@@ -254,7 +250,7 @@ dl{
 .form-style-7 li{
 	display: block;
 	padding: 9px;
-	border:1px solid #DDDDDD;
+	border:1px solid #000000;
 	margin-bottom: 30px;
 	border-radius: 3px;
 }
@@ -270,7 +266,7 @@ dl{
 	background: #FFFFFF;
 	height: 14px;
 	padding: 2px 5px 2px 5px;
-	color: #B9B9B9;
+	color: #000000;
 	font-size: 14px;
 	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
@@ -306,7 +302,7 @@ dl{
 	padding: 3px;
 	margin: 0 -9px -9px -9px;
 	text-align: center;
-	color: #C0C0C0;
+	color: #000000;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
@@ -368,7 +364,8 @@ dl{
   font-size: 20px;
 }
 
-.header-user h2{
+
+.header-user h2,h5{
   color: white;
   font-weight: bolder;
   font-size: large;
@@ -387,3 +384,9 @@ dl{
   margin-bottom: 5px;
   background-color: #ebebeb;
 }
+
+
+hr.user {
+  border-top: 3px solid #bbb;
+}
+

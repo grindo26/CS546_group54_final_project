@@ -3,48 +3,43 @@
     <h1>Explore</h1>
 </div>
 <div class="container" style="margin-bottom: 50px; margin-top:30px;">
-<div class="row">
-<div class="col-sm">
-    {{#if list1}}
-     
-        <h2 class="card-header">Cities</h2>
-        {{#each list1}}
-        <div class="card-body shadow-sm">
-            <h5 class="card-title"><a href="/cities/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
-            <p class="card-text"><b>{{this.state}} | {{this.country}} | Total Attractions : {{this.num_attractions}}</b></p>
+    <div class="row">
+        <div class="col-sm">
+            {{#if list1}}
+            <h2 class="card-header">Cities</h2>
+            {{#each list1}}
+            <div class="card-body shadow-sm">
+                <h5 class="card-title"><a href="/cities/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
+                <p class="card-text"><b>{{this.state}} | {{this.country}} | Total Attractions : {{this.num_attractions}}</b></p>
+            </div>
+            {{/each}}
+            {{else}}
+            {{/if}}
         </div>
-        {{/each}}
-  
-    {{else}}
-    {{/if}}
+    </div>
 </div>
-</div>
-</div>
-
 <div class="container" style="margin-bottom: 100px; margin-top:30px;">
-<div class="row">
-<div class="col-sm">
-    {{#if list2}}
-        <h5 class="card-header">Attractions</h2>
-        {{#each list2}}
-        <div class="card-body shadow-sm">
-            <h5 class="card-title"><a href="/attractions/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
-            <p class="card-text"><b>{{this.rating}} | {{this.price}}
+    <div class="row">
+        <div class="col-sm">
+            {{#if list2}}
+            <h5 class="card-header">
+            Attractions</h2>
+            {{#each list2}}
+            <div class="card-body shadow-sm">
+                <h5 class="card-title"><a href="/attractions/{{this._id}}" style="color:rgb(7, 0, 195); font-weight:bolder" class="card-title" >{{this.name}}</a></h5>
+                <p class="card-text"><b>{{this.rating}} | {{this.price}}
+            </div>
+            {{/each}}
+            {{else}}
+            {{/if}}
         </div>
-
-        {{/each}}
-    {{else}}
-    {{/if}}
+    </div>
 </div>
-</div>
-</div>
-
-
 <div class="container">
-<div class="row" style="margin-bottom: 100px;">
-    <a href="/cities/addCity"role="button" class="btn btn-primary btn-lg btn-block" >Add City</a>
-    <a href="/attractions" role="button" class="btn btn-secondary btn-lg btn-block" >Add Attraction</a>
-</div>
-<p>{{message}}</p>
+
+    <div class="row" style="margin-bottom: 100px;">
+        <a href="/cities/addCity" role="button" class="btn btn-primary btn-lg btn-block" >Add City</a>
+        <a href="/attractions" role="button" class="btn btn-secondary btn-lg btn-block" >Add Attraction</a>
+    </div>
 </div>
 

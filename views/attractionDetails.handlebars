@@ -1,30 +1,32 @@
-<title>{{title}}</title>
+
 <div class="header-content">
     <h1>{{singleAttraction.name}}</h1>
-    <p></p>
 </div>
 
-<p>Name: {{singleAttraction.name}}</p>
-<img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="400" width="400"/>
-<p>Reviews:</p>
-      {{#each reviewList}}
-              <a href="/reviews/{{this._id}}"><p>{{this.review}}</p> </a>      
-
-                {{/each}}  <br>
-
-<p>Rating: {{singleAttraction.rating}}</p>
-<p>Price: {{singleAttraction.price}}</p>
-
+<div class="container text-center" style="margin: 30px ;">
+    <div class="row">
+        <div class="col">
+            <img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="300"/>
+        </div>
+        <div class="col">
+            <p class="text-center font-weight-bold">Reviews:</p>
+            {{#each reviewList}}
+            <p>{{this.review}}</p>
+            {{/each}}  
+            <p class="text-center font-weight-bold">Rating: {{singleAttraction.rating}}</p>
+            <p class="text-center font-weight-bold">Price: {{singleAttraction.price}}</p>
+            <button id="get-review-form-button" class="btn btn-primary btn-lg btn-block">Add a review!</button>
+        </div>
+    </div>
+</div>
 {{!-- TODO Display map here --}}
-{{!-- <p>Location: {{singleAttractions}}</p> --}}
-<div id="map"></div>
-
-<button id="get-review-form-button">Add a review!</button>
- <a href="/reviews/editReview/{{singleAttraction._id}}"role="button" class="btn btn-primary btn-lg btn-block" >EDIT REVIEW</a>
-
-
-{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async
-    defer></script> --}}
+{{!-- 
+<p>Location: {{singleAttractions}}</p>
+--}}
+<div class="container">
+    <div id="map"></div>
+</div>
+<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/attractions.js"></script>
