@@ -43,7 +43,10 @@ const getCityById = async (cityId) => {
 
 const checkCity = async (name, state) => {
     const cityCollection = await mongoCollections.cities();
-
+    name = await helperFunc.execValdnAndTrim(name, "Name");
+    state = await helperFunc.execValdnAndTrim(state, "State");
+    await helperFunc.isNameValid(name, "Name");
+    await helperFunc.isNameValid(state, "State");
     const checkReg = new RegExp(name, "i");
     const checkReg2 = new RegExp(state, "i");
     // const cityName = await cityCollection.findOne({name: {$regex: checkReg}}, {state: {$regex: state}});
