@@ -2,6 +2,7 @@ const helperFunc = require("../helpers");
 const mongoCollections = require("../config/mongoCollections");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
+const attractionData = require("../data/attractions");
 
 const getUserFromUsername = async (username) => {
     username = await helperFunc.execValdnAndTrim(username, "username");
@@ -93,6 +94,118 @@ const checkUser = async (username, password) => {
     }
 };
 
+const addAttractionIntoUsers = async (attractionId, userId) => {
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    userId = await helperFunc.execValdnAndTrim(userId, "userId");
+    if (!ObjectId.isValid(attractionId)) {
+        throw { statusCode: 400, message: "Invalid attractionId" };
+    }
+    if (!ObjectId.isValid(userId)) {
+        throw { statusCode: 400, message: "Invalid userID." };
+    }
+    let userObj = await getUserFromUserId(userId);
+    if (!userObj || userObj === null || userObj === undefined) {
+        throw { statusCode: 400, message: "No user exists with this id" };
+    }
+    const userCollection = await mongoCollections.users();
+    const updatedInfo = await userCollection.updateOne({ _id: ObjectId(userId) }, { $push: { attractions: attractionId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
+const deleteAttractionFromUsers = async (attractionId, userId) => {
+    userId = await helperFunc.execValdnAndTrim(userId, "attractionId");
+    if (!ObjectId.isValid(userId)) throw { statusCode: 400, message: "userId is not a valid ObjectId" };
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    let attractionObj = await attractionData.getAttractionById(attractionId);
+    if (!attractionObj || attractionObj === null || attractionObj === undefined) {
+        throw { statusCode: 404, message: "No attration exists for this attractionObj" };
+    }
+    const attractionCollection = await mongoCollections.attractions();
+    const updatedInfo = await attractionCollection.updateOne({ _id: ObjectId(attractionId), $pull: { attractions: attractionId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
+const addReviewInUsers = async (reviewId, userId) => {
+    reviewId = await helperFunc.execValdnAndTrim(reviewId, "reviewId");
+    userId = await helperFunc.execValdnAndTrim(userId, "userId");
+    if (!ObjectId.isValid(reviewId)) {
+        throw { statusCode: 400, message: "Invalid reviewId" };
+    }
+    if (!ObjectId.isValid(userId)) {
+        throw { statusCode: 400, message: "Invalid userID." };
+    }
+    let userObj = await getUserFromUserId(userId);
+    if (!userObj || userObj === null || userObj === undefined) {
+        throw { statusCode: 400, message: "No user exists with this id" };
+    }
+    const userCollection = await mongoCollections.users();
+    const updatedInfo = await userCollection.updateOne({ _id: ObjectId(userId) }, { $push: { reviews: reviewId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the user for this operation. Try again later` };
+    }
+    return true;
+};
+
+const removeReviewFromUsers = async (reviewId, userId) => {
+    userId = await helperFunc.execValdnAndTrim(userId, "attractionId");
+    if (!ObjectId.isValid(userId)) throw { statusCode: 400, message: "userId is not a valid ObjectId" };
+    reviewId = await helperFunc.execValdnAndTrim(reviewId, "reviewId");
+    if (!ObjectId.isValid(reviewId)) throw { statusCode: 400, message: "reviewId is not a valid ObjectId" };
+    let userObj = await getUserFromUserId(userId);
+    if (!userObj || userObj === null || userObj === undefined) {
+        throw { statusCode: 400, message: "No user exists with this id" };
+    }
+    const userCollection = await mongoCollections.users();
+    const updatedInfo = await userCollection.updateOne({ _id: ObjectId(userId) }, { $pull: { reviews: reviewId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the user for this operation. Try again later` };
+    }
+    return true;
+};
+const addCommentInUsers = async (commentId, userId) => {
+    commentId = await helperFunc.execValdnAndTrim(commentId, "commentId");
+    userId = await helperFunc.execValdnAndTrim(userId, "userId");
+    if (!ObjectId.isValid(commentId)) {
+        throw { statusCode: 400, message: "Invalid commentId" };
+    }
+    if (!ObjectId.isValid(userId)) {
+        throw { statusCode: 400, message: "Invalid userID." };
+    }
+    let userObj = await getUserFromUserId(userId);
+    if (!userObj || userObj === null || userObj === undefined) {
+        throw { statusCode: 400, message: "No user exists with this id" };
+    }
+    const userCollection = await mongoCollections.users();
+    const updatedInfo = await userCollection.updateOne({ _id: ObjectId(userId) }, { $push: { comments: commentId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the user for this operation. Try again later` };
+    }
+    return true;
+};
+
+const removeCommentFromUsers = async (commentId, userId) => {
+    userId = await helperFunc.execValdnAndTrim(userId, "user Id");
+    if (!ObjectId.isValid(userId)) throw { statusCode: 400, message: "userId is not a valid ObjectId" };
+    commentId = await helperFunc.execValdnAndTrim(commentId, "commentId");
+    if (!ObjectId.isValid(commentId)) throw { statusCode: 400, message: "commentId is not a valid ObjectId" };
+    let userObj = await getUserFromUserId(userId);
+    if (!userObj || userObj === null || userObj === undefined) {
+        throw { statusCode: 400, message: "No user exists with this id" };
+    }
+    const userCollection = await mongoCollections.users();
+    const updatedInfo = await userCollection.updateOne({ _id: ObjectId(userId) }, { $pull: { comments: commentId } });
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the user for this operation. Try again later` };
+    }
+    return true;
+};
 
 module.exports = {
     createUser,
@@ -100,4 +213,10 @@ module.exports = {
     getUserFromUserId,
     getUserFromUsername,
     getUserFromEmail,
+    addAttractionIntoUsers,
+    deleteAttractionFromUsers,
+    addReviewInUsers,
+    removeReviewFromUsers,
+    addCommentInUsers,
+    removeCommentFromUsers,
 };

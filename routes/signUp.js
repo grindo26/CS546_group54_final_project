@@ -4,6 +4,7 @@ const data = require("../data");
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
+const xss = require('xss');
 
 router
     .route("/")
@@ -36,18 +37,15 @@ router
             await helperFunc.isEmailValid(email, "email");
             await helperFunc.isPasswordValid(password, "password");
 
-            const create = await data.usersData.createUser(name, username, email, age, password);
+            const create = await data.usersData.createUser(xss(name), xss(username), xss(email), xss(age), xss(password));
+
             if (create) {
                 return res.redirect("/login");
             } else {
                 throw { statusCode: 404, message: "Internal Server Error" };
             }
         } catch (e) {
-            if (e == "Internal Server Error") {
-                return res.status(500).render("forbiddenAccess", { title: "Forbidden Access Page", error: "Error status 500: " + e });
-            } else {
-                return res.status(400).render("userRegister", { title: "Registeration Page", error: "Error status 400: " + e });
-            }
+            return res.status(e.statusCode).render("error", { title: "Error", message: e.message });
         }
     });
 

@@ -8,7 +8,8 @@
 <img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="400" width="400"/>
 <p>Reviews:</p>
       {{#each reviewList}}
-                   <p>{{this.review}}</p>   
+              <a href="/reviews/{{this._id}}"><p>{{this.review}}</p> </a>      
+
                 {{/each}}  <br>
 
 <p>Rating: {{singleAttraction.rating}}</p>
@@ -22,6 +23,11 @@
  <a href="/reviews/editReview/{{singleAttraction._id}}"role="button" class="btn btn-primary btn-lg btn-block" >EDIT REVIEW</a>
 
 
-<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async
+    defer></script> --}}
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/attractions.js"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJMl9OVi9dnmi-Rnp1zqrwZUSS6YV56t8"></script>
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>

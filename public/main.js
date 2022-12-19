@@ -12,6 +12,7 @@ let cityContent = document.querySelector('.cityContent');
 let attrContent = document.querySelector('.attrContent')
 let uldiv = document.getElementsByClassName('content2')
 let sort = document.getElementById('sort')
+let add = document.getElementById('add')
 
 filter.addEventListener('change', function () {
     content = document.querySelector('.content');

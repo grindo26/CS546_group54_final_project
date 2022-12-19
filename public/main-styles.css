@@ -360,6 +360,20 @@ dl{
   font-size: large;
 }
 
+.header-user {
+  padding: 20px;
+  text-align: center;
+  background: #1a46c9;
+  color: white;
+  font-size: 20px;
+}
+
+.header-user h2{
+  color: white;
+  font-weight: bolder;
+  font-size: large;
+}
+
 .two-box{
   margin: 10px;
   padding: 20px;
