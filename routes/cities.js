@@ -46,7 +46,7 @@ router.route("/:cityId").get(async (req, res) => {
     try {
         const cityList = await cityData.getCityById(cityId);
         const attrList = await attractionData.getAllAttraction(cityId.toString());
-        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList });
+        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: 'City Details' });
     } catch (e) {
         return res.status(500).json("Couldn't get the city and attractions");
     }
