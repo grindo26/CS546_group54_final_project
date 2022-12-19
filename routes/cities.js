@@ -5,11 +5,12 @@ const cityData = data.citiesData;
 const attractionData = data.attractionsData;
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
+const xss = require('xss');
 
 router.route("/").get(async (req, res) => {
     try {
         let l_arrCities = await cityData.getAllCities(0);
-        return res.status(200).json(l_arrCities);
+        return res.status(200).render('citiesList', {title: 'All Cities', displayCities: l_arrCities});
     } catch (e) {
         return res.status(500).json("Couldn't get all the cities!");
     }
@@ -19,9 +20,12 @@ router
     .route("/addCity")
     .get(async (req, res) => {
         try {
+            if (!req.session.userId){
+                return res.status(200).render("addCity", {message: 'Please login/SignUp before adding city'})
+            }
             return res.status(200).render("addCity", { title: "Add City" });
         } catch (e) {
-            return res.status(500).json("Nope still not working");
+            return res.status(500).json("Couldn't load Add-City Page");
         }
     })
     .post(async (req, res) => {
@@ -31,7 +35,7 @@ router
         try {
             const checkif = await cityData.checkCity(name, state);
             if (checkif == true) {
-                const newCity = await cityData.createCity(name, state, country);
+                const newCity = await cityData.createCity(xss(name), xss(state), xss(country));
                 return res.status(200).render("addCity");
             } else {
                 return res.status(200).render("addCity", { error: "city already exists in that state" });
@@ -46,7 +50,7 @@ router.route("/:cityId").get(async (req, res) => {
     try {
         const cityList = await cityData.getCityById(cityId);
         const attrList = await attractionData.getAllAttraction(cityId.toString());
-        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList });
+        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: 'City Insights'});
     } catch (e) {
         return res.status(500).json("Couldn't get the city and attractions");
     }

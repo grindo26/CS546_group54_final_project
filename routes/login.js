@@ -4,6 +4,7 @@ const data = require("../data");
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
+const xss = require('xss');
 
 router
     .route("/")
@@ -26,7 +27,7 @@ router
             password = await helperFunc.execValdnAndTrim(password, "password");
             await helperFunc.isUsernameValid(username, "username");
             await helperFunc.isPasswordValid(password, "password");
-            const create = await data.usersData.checkUser(username, password);
+            const create = await data.usersData.checkUser(xss(username), xss(password));
             if (create.authenticatedUser) {
                 req.session.user = username;
                 req.session.userId = create.userId;

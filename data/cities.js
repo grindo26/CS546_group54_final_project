@@ -57,6 +57,7 @@ const checkCity = async (name, state) => {
 };
 
 const getAllCities = async (num_cities) => {
+    //if you need all cities, pass 0 in num_cities
     //if num_cities is not supplied, fetch 5 cities, otherwise fetch the num specified.
     if (num_cities === undefined || num_cities === null) {
         num_cities = 5;

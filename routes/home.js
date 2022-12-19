@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
+const xss = require('xss');
 
 router.route("/").get(async (req, res) => {
     //code to fetch cities data
