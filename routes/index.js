@@ -7,6 +7,8 @@ const attractionsRoutes = require("./attractions");
 const searchRoutes = require("./search");
 const homeRoutes = require("./home");
 const logoutRoutes = require("./logout");
+
+const xss = require('xss');
 const commentRoutes = require("./comments");
 
 const constructorMethod = (app) => {

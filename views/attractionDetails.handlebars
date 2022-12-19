@@ -1,13 +1,15 @@
+<title>{{title}}</title>
 <div class="header-content">
     <h1>{{singleAttraction.name}}</h1>
     <p></p>
 </div>
 
-{{!-- <title>{{title}}</title> --}}
-
-<p>{{singleAttraction}}</p>
-<img src="data:image/jpg;base64,{{singleAttraction.photo}}" />
-<p>Reviews: {{singleAttraction.reviews}}</p>
+<p>Name: {{singleAttraction.name}}</p>
+<img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="400" width="400"/>
+<p>Reviews:</p>
+      {{#each reviewList}}
+              <a href="/reviews/{{this._id}}"><p>{{this.review}}</p> </a>      
+                {{/each}}  <br>
 
 <p>Rating: {{singleAttraction.rating}}</p>
 <p>Price: {{singleAttraction.price}}</p>

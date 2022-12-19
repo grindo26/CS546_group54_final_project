@@ -7,6 +7,7 @@ const { ObjectId } = require("mongodb");
 const fs = require("fs");
 const multer = require("multer");
 const { reviewsData } = require("../data");
+const xss = require('xss');
 const destinationImg = multer({ dest: "uploads/" });
 
 router.route("/").get(async (req, res) => {
@@ -28,12 +29,16 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
         let location = req.body.locationInput;
         let reviews = [];
         let rating = 0;
+
         // TODO: when selecting one tag, an array isn't passed. Handle
         let tags = req.body.Tags;
 
+        name = await helperFunc.execValdnAndTrim(xss(name), "Attraction Name");
+        cityId = await helperFunc.execValdnAndTrim(xss(cityId), "City Id");
+
         name = await helperFunc.execValdnAndTrim(name, "Attraction Name");
         location = await helperFunc.execValdnAndTrim(location, "Location");
-        cityId = await helperFunc.execValdnAndTrim(cityId, "City Id");
+  
         if (!ObjectId.isValid(cityId)) {
             throw { statusCode: 400, message: "Sorry the city you selected doesn't exist. Please select another." };
         }
@@ -41,17 +46,9 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
         await helperFunc.validatePriceRange(price);
         const imageData = fs.readFileSync(req.file.path);
 
-        const addAttraction = await attractionData.createAttraction(
-            name,
-            cityId,
-            reviews,
-            rating,
-            price,
-            imageData,
-            location,
-            tags,
-            req.session.userId
-        );
+
+        const addAttraction = await attractionData.createAttraction(xss(name), xss(cityId), xss(reviews), xss(rating), xss(price), xss(imageData), xss(location), xss(tags),req.session.userId);
+
         return res.status(200).render("attractionDetails", { title: "Attraction", singleAttraction: addAttraction, userName: req.session.userName });
     } catch (e) {
         return res.status(e.statusCode).render("error", { title: "Error", message: e.message });
@@ -67,6 +64,7 @@ router
             if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
             const attractionFound = await attractionData.getAttractionById(id);
             const reviewsFound = await reviewsData.getReviewsByReviewIdArr(attractionFound.reviews);
+
             return res.status(200).render("attractionDetails", {
                 title: "Attraction Details",
                 singleAttraction: attractionFound,

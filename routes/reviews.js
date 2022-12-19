@@ -5,6 +5,9 @@ const mongoCollections = require("../config/mongoCollections");
 const reviewsData = data.reviewsData;
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
+const { users } = require("../config/mongoCollections");
+const xss = require('xss');
+
 
 router.route("/form").get(async (req, res) => {
     try {
@@ -42,7 +45,10 @@ router.route("/comments/").post(async (req, res) => {
         if (!l_objReview || l_objReview === null || l_objReview === undefined) {
             throw { statusCode: 404, message: `No review exists with that id` };
         }
-        let objComment = await data.commentsData.createComment(req.session.userId, commentText, reviewId);
+        if (!req.session.userId) {
+            return res.status(401).render("userLogin", { message: "You must be logged in to post a comment", title: "Login" });
+        }
+        let objComment = await data.commentsData.createComment(xss(req.session.userId), xss(commentText), xss(reviewId));
         if (!objComment || objComment === null || objComment === undefined)
             throw { statusCode: 500, message: `Couldn't add the comment. Try again later` };
         let returnObj = Object.assign(objComment, { username: req.session.user });
@@ -80,7 +86,7 @@ router.route("/:attractionId").post(async (req, res) => {
         if (!req.session.userId) {
             return res.status(401).render("userLogin", { message: "You must be logged in to post a review", title: "Login" });
         }
-        let l_objReview = await data.reviewsData.createReview(req.session.userId, attractionId, rating, reviewText);
+        let l_objReview = await data.reviewsData.createReview(xss(req.session.userId), xss(attractionId), xss(rating), xss(reviewText));
         let returnObj = Object.assign(l_objReview, { username: req.session.user });
         req.session.reviewId = returnObj._id;
         return res.status(200).render("reviewDetails", { title: "ReviewDetails", reviewObj: returnObj });
