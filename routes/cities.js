@@ -5,12 +5,12 @@ const cityData = data.citiesData;
 const attractionData = data.attractionsData;
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
-const xss = require('xss');
+const xss = require("xss");
 
 router.route("/").get(async (req, res) => {
     try {
         let l_arrCities = await cityData.getAllCities(0);
-        return res.status(200).render('citiesList', {title: 'All Cities', displayCities: l_arrCities});
+        return res.status(200).json(l_arrCities);
     } catch (e) {
         return res.status(500).json("Couldn't get all the cities!");
     }
@@ -20,8 +20,8 @@ router
     .route("/addCity")
     .get(async (req, res) => {
         try {
-            if (!req.session.userId){
-                return res.status(200).render("addCity", {message: 'Please login/SignUp before adding city'})
+            if (!req.session.userId) {
+                return res.status(200).render("addCity", { message: "Please login/SignUp before adding city" });
             }
             return res.status(200).render("addCity", { title: "Add City" });
         } catch (e) {
@@ -43,7 +43,6 @@ router
             if (checkif == true) {
                 const newCity = await cityData.createCity(xss(name), xss(state), xss(country));
                 return res.status(200).render("addCity");
-
             } else {
                 return res.status(200).render("addCity", { error: "City already exists in that state" });
             }
@@ -57,20 +56,20 @@ router.route("/:cityId").get(async (req, res) => {
     try {
         const cityList = await cityData.getCityById(cityId);
         const attrList = await attractionData.getAllAttraction(cityId.toString());
-        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: 'City Insights'});
+        return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: "City Insights" });
     } catch (e) {
-        return res.status(500).render('error');
+        return res.status(500).render("error");
     }
     try {
         const cityList = await cityData.getCityById(cityId);
         try {
-            const attrList = await attractionData.getAllAttraction(cityId)
-            return res.status(200).render("cityDetails", { list1: cityList, list2: attrList , title: "City Details" });
+            const attrList = await attractionData.getAllAttraction(cityId);
+            return res.status(200).render("cityDetails", { list1: cityList, list2: attrList, title: "City Details" });
         } catch (error) {
-            return res.status(404).render("cityDetails", { list1: cityList});
+            return res.status(404).render("cityDetails", { list1: cityList });
         }
     } catch (error) {
-        return res.status(error.statusCode).render('cityDetails', {error: error.message});
+        return res.status(error.statusCode).render("cityDetails", { error: error.message });
     }
 });
 
