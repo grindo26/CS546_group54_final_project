@@ -4,7 +4,7 @@ const citiesData = data.citiesData;
 const attractionsData = data.attractionsData;
 const reviewsData = data.reviewsData;
 const commentsData = data.commentsData;
-const usersData = data.usersData;
+const usersDataCode = data.usersDataCode;
 
 async function main() {
     const db = await dbConnection.dbConnection();
