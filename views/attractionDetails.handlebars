@@ -1,4 +1,3 @@
-
 <div class="header-content">
     <h1>{{singleAttraction.name}}</h1>
 </div>
@@ -6,13 +5,13 @@
 <div class="container text-center" style="margin: 30px ;">
     <div class="row">
         <div class="col">
-            <img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="300"/>
+            <img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="300" />
         </div>
         <div class="col">
             <p class="text-center font-weight-bold">Reviews:</p>
             {{#each reviewList}}
-            <p>{{this.review}}</p>
-            {{/each}}  
+                <p>{{this.review}}</p>
+            {{/each}}
             <p class="text-center font-weight-bold">Rating: {{singleAttraction.rating}}</p>
             <p class="text-center font-weight-bold">Price: {{singleAttraction.price}}</p>
             <button id="get-review-form-button" class="btn btn-primary btn-lg btn-block">Add a review!</button>
@@ -26,7 +25,8 @@
 <div class="container">
     <div id="map"></div>
 </div>
-<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async
+    defer></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/attractions.js"></script>
