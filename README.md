@@ -29,8 +29,12 @@ On the right top corner of the homepage, there will be a user icon which display
 * Add City ([http://localhost:3000/cities/addCity](http://localhost:3000/cities/addCity)
 * User Profile ([http://localhost:3000/user/userProfile](http://localhost:3000/user/userProfile))
 * Logout ([http://localhost:3000/logout])(http://localhost:3000/logout)
- 
 
+On City Scanner, people (who are especially new to a city) will be able to explore fun places around them. 
+If a user explores a new place, he can add that too in the list of attractions of that city and other people can review that particular attraction.
+
+ 
+## NOTE
 User CANNNOT do the following functions without being logged in:
 
 * Add City 
@@ -43,6 +47,8 @@ User CANNNOT do the following functions without being logged in:
 * Delete an attraction
 * Delete a review
 * Delete a comment
+
+
 
 
 
