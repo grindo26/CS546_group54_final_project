@@ -28,9 +28,8 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
     price = await helperFunc.execValdnAndTrim(price, "price");
     await helperFunc.validatePriceRange(price);
     // location = await helperFunc.execValdnAndTrim(location, "location");
-    if (tags.length != 0) {
-        await helperFunc.execValdnForArr(tags, "tags");
-    }
+    tags = await helperFunc.execValdnAndTrim(tags, "tags");
+
     const imageBuffer = Buffer.from(photo, "binary").toString("base64");
 
     // validation ends-----------------
@@ -54,9 +53,9 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
     const returnObj = Object.assign({ _id: newId }, newAttraction);
     //Now also update num_attractions in city page.
     const updateAttrRes = await citiesData.addAttractionInCity(cityId, returnObj._id);
-    const userUpdateRes = await usersDataCode.addAttractionIntoUsers(returnObj._id, userId);
-    console.log(userUpdateRes);
-    if (updateAttrRes && userUpdateRes) {
+    // const userUpdateRes = await usersDataCode.addAttractionIntoUsers(returnObj._id, userId);
+
+    if (updateAttrRes) {
         return returnObj;
     } else throw { statusCode: 500, message: "Some error occurred. Try again later" };
 };
