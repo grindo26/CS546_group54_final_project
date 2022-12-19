@@ -1,12 +1,28 @@
 <title>{{title}}</title>
-<h1>User Profile</h1>
-<p>Name: {{user.name}}</p>
-<p>Username: {{user.username}}</p>
-<p>Email: {{user.email}}</p>
-<p>Age: {{user.age}}</p>
+
+<div class="header">
+    <h1>{{user.name}}'s Profile Page</h1>
+</div>
+<div class="container border" style="padding: 0px;">
+    <div class="container"  style="padding: 0px;">
+        <div class="row">
+            <div class="col" style="padding-top: 30px; background-color:rgb(242, 242, 242)">
+                <p class="text-center">Username: {{user.username}}</p>
+            </div>
+            <div class="col" style="padding-top: 30px; background-color:rgb(232, 232, 232)">
+                <p class="text-center">Email: {{user.email}}</p>
+            </div>
+            <div class="col" style="padding-top: 30px; background-color:rgb(222, 222, 222)">
+
+                <p class="text-center" >Age: {{user.age}}</p>
+            </div>
+        </div>
+    </div>
+
+
 
      <!-- Tabbed interface -->
-        <div class="tabbed-content">
+        <div class="tabbed-content" style="margin-top: 20px;">
             <!-- Tab list -->
             <ul class="tab-list">
                 <li class="active" data-tab="comments">Comments</li>
@@ -17,26 +33,30 @@
             <!-- Tab content -->
             <div class="tab-content" id="comments">
                 <!-- Display the user's comments here -->
-                 <p>Comments added by you:</p>
+                 <h5 class=" header-user text-center">Comments added by you:</h5>
                     {{#each displayComments}}
-                   <p>{{this.commentorId}}</p>   
+                   <p class="text-center font-weight-bold" style="padding: 0px 30px;">{{this.commentorId}}</p>  
+                   <hr class="user"> 
                 {{/each}} 
             </div>
             <div class="tab-content" id="reviews">
                 <!-- Display the user's reviews here -->
-                 <p>Reviews added by you:</p>
+                 <h5 class=" header-user text-center">Reviews added by you:</h5>
                   {{#each displayReviews}}
-                   <p>{{this.review}}</p>   
+                   <p class="text-center font-weight-bold" style="padding: 0px 30px;">{{this.review}}</p>   
+                   <hr class="user"> 
                 {{/each}} 
             </div>
           <div class="tab-content" id="posts">
-              <p>Attractions added by you:</p>
+            <h5 class=" header-user text-center">Attractions added by you:</h5>
+       
                 {{#each displayAttractions}}
-                   <p>{{this.name}}</p>   
+                   <p class="text-center font-weight-bold" style="padding: 0px 30px;">{{this.name}}</p>   
+                   <hr class="user"> 
                 {{/each}} 
             </div>
         </div>
-
+</div>
           <style>
             /* Styles for the tabbed interface */
             .tabbed-content {

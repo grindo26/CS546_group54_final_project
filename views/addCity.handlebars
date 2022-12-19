@@ -2,29 +2,27 @@
     <h1>ADD CITY</h1>
 </div>
 
-    <p>{{error}}</p>
+    <p class="error text-center">{{error}}</p>
 <div class="container">
 
 <form class="form-style-7" method="POST" action="#" id="city-form">
     <ul class="shadow">
         <li class="shadow-sm">
             <label for="nameInput">  Enter Name: </label>
-            <input type="text" name="nameInput" id="nameInput">
+            <input type="text" name="nameInput" id="nameInput" required>
             <span>Enter your username</span>
         </li>
         <li class="shadow-sm">
             <label for="stateInput" > Enter State:</label>
-            <input type="text" name="stateInput" id="stateInput">
+            <input type="text" name="stateInput" id="stateInput" required>
             <span>Enter your password</span>
         <li class="shadow-sm">
             <label for="countryInput" > Enter Country:</label>
-            <input type="text" name="countryInput" id="countryInput">
+            <input type="text" name="countryInput" id="countryInput" required>
             <span>Enter your username</span>
         </li >
         <li>
-            <input type="submit" value="Log In" class="shadow">
-            - or - 
-            <a href="/signUp"><input type="button" value="Signup" class="shadow"></a>
+            <input type="submit" value="Submit" class="shadow">
         </li>
     </ul>
 </form>
