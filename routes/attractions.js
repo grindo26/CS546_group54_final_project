@@ -6,6 +6,7 @@ const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
 const fs = require("fs");
 const multer = require("multer");
+const { reviewsData } = require("../data");
 const destinationImg = multer({ dest: "uploads/" });
 
 router.route("/").get(async (req, res) => {
@@ -49,9 +50,10 @@ router
             id = await helperFunc.execValdnAndTrim(id, "Attraction ID");
             if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
             const attractionFound = await attractionData.getAttractionById(id);
+            const reviewsFound = await reviewsData.getReviewsByReviewIdArr(attractionFound.reviews);
             return res
                 .status(200)
-                .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName });
+                .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName, reviewList: reviewsFound});
         } catch (e) {
             return res.status(404).json(e);
         }
