@@ -1,24 +1,30 @@
+
 <div class="header-content">
     <h1>{{singleAttraction.name}}</h1>
-    <p></p>
 </div>
-
-{{!-- <title>{{title}}</title> --}}
-
-<p>{{singleAttraction}}</p>
-<img src="data:image/jpg;base64,{{singleAttraction.photo}}" />
-<p>Reviews: {{singleAttraction.reviews}}</p>
-
-<p>Rating: {{singleAttraction.rating}}</p>
-<p>Price: {{singleAttraction.price}}</p>
-
+<div class="container text-center" style="margin: 30px ;">
+    <div class="row">
+        <div class="col">
+            <img src="data:image/jpg;base64,{{singleAttraction.photo}}" height="300"/>
+        </div>
+        <div class="col">
+            <p class="text-center font-weight-bold">Reviews:</p>
+            {{#each reviewList}}
+            <p>{{this.review}}</p>
+            {{/each}}  
+            <p class="text-center font-weight-bold">Rating: {{singleAttraction.rating}}</p>
+            <p class="text-center font-weight-bold">Price: {{singleAttraction.price}}</p>
+            <button id="get-review-form-button" class="btn btn-primary btn-lg btn-block">Add a review!</button>
+        </div>
+    </div>
+</div>
 {{!-- TODO Display map here --}}
-{{!-- <p>Location: {{singleAttractions}}</p> --}}
-<div id="map"></div>
-
-<button id="get-review-form-button">Add a review!</button>
-
-
+{{!-- 
+<p>Location: {{singleAttractions}}</p>
+--}}
+<div class="container">
+    <div id="map"></div>
+</div>
 <script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/attractions.js"></script>

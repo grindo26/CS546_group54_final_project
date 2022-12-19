@@ -1,28 +1,41 @@
-
-<div class="review">
-    <h2>{{reviewObj.username}}</h2>
-    <h3>{{reviewObj.rating}}</h3>
-    <p>{{reviewObj.review}}</p>
-    <p>{{reviewObj._id}}</p>
-    <ul id="commentsList">
-        {{#each reviewObj.comments}}
+<div class="container">
+    <div class="review">
+        <div class="header-user">
+            <h2>Reviews By: {{reviewObj.username}}</h2>
+        </div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col" style="padding: 30px;">
+                    <h3>{{reviewObj.rating}}</h3>
+                </div>
+                <div class="col" style="padding: 30px;">
+                    <p><b>{{reviewObj.review}}</b></p>
+                </div>
+            </div>
+        </div>
+        {{!-- 
+        <p>{{reviewObj._id}}</p>
+        --}}
+        <ul id="commentsList">
+            {{#each reviewObj.comments}}
             <li>
                 <h4>{{commenterName}}
                 </h4>
                 <p>{{comment}}</p>
             </li>
-        {{/each}}
-    </ul>
+            {{/each}}
+        </ul>
+    </div>
 </div>
-
-<div id="comments">
-    <!-- comments will be inserted here -->
-    <form id="commentsForm">
-        <label for="commentText"> Post a comment:</label><br>
-        <textarea id="commentText" name="commentText" rows="4" cols="50"></textarea><br>
-        <button type="submit">Add Comment</button>
-    </form>
+<div class="container">
+    <div id="comments">
+        <!-- comments will be inserted here -->
+        <form id="commentsForm">
+            <label for="commentText"> Post a comment:</label><br>
+            <textarea id="commentText" name="commentText" rows="4" cols="50"></textarea><br>
+            <button type="submit">Add Comment</button>
+        </form>
+    </div>
 </div>
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/reviews.js"></script>
