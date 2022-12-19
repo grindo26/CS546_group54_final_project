@@ -4,7 +4,7 @@ const data = require("../data");
 const helperFunc = require("../helpers");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
-const xss = require('xss');
+const xss = require("xss");
 
 router
     .route("/")
@@ -37,7 +37,7 @@ router
             await helperFunc.isEmailValid(email, "email");
             await helperFunc.isPasswordValid(password, "password");
 
-            const create = await data.usersData.createUser(xss(name), xss(username), xss(email), xss(age), xss(password));
+            const create = await data.usersDataCode.createUser(xss(name), xss(username), xss(email), xss(age), xss(password));
 
             if (create) {
                 return res.redirect("/login");

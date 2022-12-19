@@ -46,7 +46,7 @@ const createReview = async (userId, attractionId, rating, review) => {
     // to insert id at the beginning
     const returnObj = Object.assign({ _id: newId }, newReview);
     const reviewAddedInAttraction = await attractionsData.addReviewInAttractions(attractionId, returnObj._id, returnObj.rating);
-    const reviewAddedInUser = await usersDataCode.addReviewInUsers(userId, returnObj._id);
+    const reviewAddedInUser = await usersDataCode.addReviewInUsers(returnObj._id, userId);
     if (reviewAddedInAttraction && reviewAddedInUser) {
         return returnObj;
     } else throw { statusCode: 500, message: "Some error occurred. Try again later" };
