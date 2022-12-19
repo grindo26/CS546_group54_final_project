@@ -19,7 +19,7 @@ filter.addEventListener('change', function () {
     content2 = document.querySelector('.content2')
     nameli = document.getElementsByClassName('nameli')
     priceli = document.getElementsByClassName('priceli')
-    let tagli = document.getElementsByClassName('tagli')
+    tagli = document.getElementsByClassName('tagli')
     ratingli = document.getElementsByClassName('ratingli')
     myul = document.getElementById('results')
     let li = document.createElement('li')
@@ -81,8 +81,8 @@ else if (selected == '$$') {
             li3.innerHTML = ratingli[i].textContent
             li2.innerHTML = nameli[i].textContent
         li.innerHTML = priceli[i].textContent
-        myul.appendChild(li2)
         myul.appendChild(li)
+        myul.appendChild(li2)
         myul.appendChild(li3)
         myul.appendChild(br)
         }
@@ -150,6 +150,60 @@ else if (selected == 'tags2') {
         let li3 = document.createElement('li')
         let li4 = document.createElement('li')
         if(tagli[i].innerHTML.includes('Outdoor Activity')){
+
+            li3.innerHTML = ratingli[i].textContent
+            li2.innerHTML = nameli[i].textContent
+        li.innerHTML = priceli[i].textContent
+        li4.innerHTML = tagli[i].innerHTML
+
+        myul.appendChild(li4)
+        myul.appendChild(li2)
+        myul.appendChild(li)
+        myul.appendChild(li3)
+        myul.appendChild(br)
+        }
+
+    }
+return
+}
+else if (selected == 'tags3') {
+    content.style.display = 'none'
+    content2.style.display='block'
+    for(let i=0;i<tagli.length;i++){
+
+        let br = document.createElement('br')
+        let li = document.createElement('li')
+        let li2 = document.createElement('li')
+        let li3 = document.createElement('li')
+        let li4 = document.createElement('li')
+        if(tagli[i].innerHTML.includes('Parks')){
+
+            li3.innerHTML = ratingli[i].textContent
+            li2.innerHTML = nameli[i].textContent
+        li.innerHTML = priceli[i].textContent
+        li4.innerHTML = tagli[i].innerHTML
+
+        myul.appendChild(li4)
+        myul.appendChild(li2)
+        myul.appendChild(li)
+        myul.appendChild(li3)
+        myul.appendChild(br)
+        }
+
+    }
+return
+}
+else if (selected == 'tags4') {
+    content.style.display = 'none'
+    content2.style.display='block'
+    for(let i=0;i<tagli.length;i++){
+
+        let br = document.createElement('br')
+        let li = document.createElement('li')
+        let li2 = document.createElement('li')
+        let li3 = document.createElement('li')
+        let li4 = document.createElement('li')
+        if(tagli[i].innerHTML.includes('Monument')){
 
             li3.innerHTML = ratingli[i].textContent
             li2.innerHTML = nameli[i].textContent
@@ -266,7 +320,6 @@ sort.addEventListener('change', function () {
       const li3 = document.createElement('li')
       let br = document.createElement('br')
      a1.innerHTML = nameli[j].textContent
-      a1.setAttribute('href', href)
       li.innerHTML = results[j];
       li2.appendChild(a1)
       li3.innerHTML = priceli[j].textContent

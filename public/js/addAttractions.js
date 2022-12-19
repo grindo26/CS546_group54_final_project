@@ -1,4 +1,5 @@
 // client.js
+
 $(document).ready(function () {
     function getCities() {
         return $.ajax({
@@ -16,7 +17,5 @@ $(document).ready(function () {
 
     getCities().then(populateDropdown);
 
-
-    // var input = document.getElementById("locationInput");
-    // var autocomplete = new google.maps.places.Autocomplete(input);
+    //location code google maps ..
 });

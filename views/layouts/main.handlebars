@@ -8,6 +8,7 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <title>{{title}}</title>
         <link rel="stylesheet" href="/public/main-styles.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-light sticky-top bg-light" style="padding: 10px 0px;">
@@ -16,7 +17,7 @@
                 <form method="POST" action="/search/search" id="search-form" class="d-flex">
                     <label for="searchInput"> </label>
                     <input type="text" name="searchInput" id="searchInput" class="form-control me-2">
-                    <button id="submit" class="btn btn-outline-success"  type="submit">Search</button>
+                    <button id="submit" class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div class="dropdown">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
@@ -28,6 +29,7 @@
                         <a href="/user/userProfile">User Profile</a>
                         <a href="/cities/addCity">Add City</a>
                         <a href="/attractions">Add Attraction</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 </div>
             </div>

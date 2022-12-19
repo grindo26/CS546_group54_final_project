@@ -8,7 +8,7 @@
         <ul class="shadow" style="padding:40px;">
             <li>
                 <label for="attractionInput"> Name:</label>
-                <input type="text" id="attractionInput" name="attractionInput">
+                <input type="text" id="attractionInput" name="attractionInput" required>
             </li>
             <li>
                 <label for="cityInput">Choose a city:</label>
@@ -34,6 +34,7 @@
                 <input type="checkbox" id="Tag2" name="Tags" value="Outdoor Activity">Outdoor<br>
                 <input type="checkbox" id="Tag3" name="Tags" value="Monument">Monument<br>
                 <input type="checkbox" id="Tag4" name="Tags" value="Parks"> Parks and Activities<br>
+
             </li>
             <li>
                 <label for="attrImg">Select an image:</label>
@@ -45,6 +46,5 @@
         </ul>
     </form>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/public/js/addAttractions.js"></script>
