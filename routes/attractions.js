@@ -33,11 +33,9 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
         // TODO: when selecting one tag, an array isn't passed. Handle
         let tags = req.body.Tags;
 
+
         name = await helperFunc.execValdnAndTrim(xss(name), "Attraction Name");
         cityId = await helperFunc.execValdnAndTrim(xss(cityId), "City Id");
-
-        name = await helperFunc.execValdnAndTrim(name, "Attraction Name");
-        location = await helperFunc.execValdnAndTrim(location, "Location");
   
         if (!ObjectId.isValid(cityId)) {
             throw { statusCode: 400, message: "Sorry the city you selected doesn't exist. Please select another." };

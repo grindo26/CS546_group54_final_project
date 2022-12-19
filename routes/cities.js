@@ -60,7 +60,7 @@ router.route("/:cityId").get(async (req, res) => {
         return res.status(404).render("cityDetails", { list1: cityList, list2: attrList, title: 'City Insights'});
 
     } catch (e) {
-        return res.status(500).json("Couldn't get the city and attractions");
+        return res.status(500).render('error');
     }
     try {
         const cityList = await cityData.getCityById(cityId);

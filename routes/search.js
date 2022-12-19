@@ -19,8 +19,13 @@ router
     .post(async (req, res) => {
         let searchString = req.body.searchInput;
         try {
-            searchString = await helperFunc.execValdnAndTrim(searchString, "Search String");
-            await helperFunc.isNameValid(searchString, "Search String");
+
+            if (!req.session.userId) {
+                return res.status(401).render("userLogin", { message: "You must be logged in to post a comment", title: "Login" });
+            }
+            searchString = await helperFunc.execValdnAndTrim(searchString, "searchbar");
+            await helperFunc.isNameValid(searchString, "searchbar");
+
             const searchForCity = await searchingData.searchCity(searchString);
             const searchForAttraction = await searchingData.searchAttraction(searchString);
 

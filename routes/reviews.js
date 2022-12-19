@@ -58,7 +58,8 @@ router.route("/comments/").post(async (req, res) => {
     }
 });
 
-router.route("/:attractionId").post(async (req, res) => {
+router.route("/:attractionId")
+.post(async (req, res) => {
     let attractionId = req.params.attractionId;
     let reviewText = req.body.reviewTxt;
     let rating = req.body.rating;
@@ -93,7 +94,9 @@ router.route("/:attractionId").post(async (req, res) => {
     } catch (error) {
         return res.status(error.statusCode).render("error", { title: "Error", status: error.statusCode, message: error.message });
     }
+    
 });
+
 
 router
     .route("/:reviewId")
