@@ -20,6 +20,9 @@ router.route("/").get(async (req, res) => {
 
 router.post("/", destinationImg.single("attrImg"), async (req, res) => {
     try {
+        if (!req.session.userId) {
+            return res.status(401).render("userLogin", { message: "You must be logged in to add an attraction", title: "Login" });
+        }
         let name = req.body.attractionInput;
         let cityId = req.body.cityInput;
         let price = req.body.priceInput;
@@ -32,15 +35,23 @@ router.post("/", destinationImg.single("attrImg"), async (req, res) => {
 
         name = await helperFunc.execValdnAndTrim(xss(name), "Attraction Name");
         cityId = await helperFunc.execValdnAndTrim(xss(cityId), "City Id");
+
+        name = await helperFunc.execValdnAndTrim(name, "Attraction Name");
+        location = await helperFunc.execValdnAndTrim(location, "Location");
+  
         if (!ObjectId.isValid(cityId)) {
             throw { statusCode: 400, message: "Sorry the city you selected doesn't exist. Please select another." };
         }
+        price = await helperFunc.execValdnAndTrim(price, "price");
+        await helperFunc.validatePriceRange(price);
         const imageData = fs.readFileSync(req.file.path);
 
-        const addAttraction = await attractionData.createAttraction(xss(name), xss(cityId), xss(reviews), xss(rating), xss(price), xss(imageData), xss(location), xss(tags));
+
+        const addAttraction = await attractionData.createAttraction(xss(name), xss(cityId), xss(reviews), xss(rating), xss(price), xss(imageData), xss(location), xss(tags),req.session.userId);
+
         return res.status(200).render("attractionDetails", { title: "Attraction", singleAttraction: addAttraction, userName: req.session.userName });
     } catch (e) {
-        return res.status(500).json("Couldn't get the attraction!");
+        return res.status(e.statusCode).render("error", { title: "Error", message: e.message });
     }
 });
 
@@ -53,10 +64,13 @@ router
             if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
             const attractionFound = await attractionData.getAttractionById(id);
             const reviewsFound = await reviewsData.getReviewsByReviewIdArr(attractionFound.reviews);
-            console.log(reviewsFound)
-            return res
-                .status(200)
-                .render("attractionDetails", { title: "Attraction Details", singleAttraction: attractionFound, userName: req.session.userName, reviewList: reviewsFound});
+
+            return res.status(200).render("attractionDetails", {
+                title: "Attraction Details",
+                singleAttraction: attractionFound,
+                userName: req.session.userName,
+                reviewList: reviewsFound,
+            });
         } catch (e) {
             return res.status(404).json(e);
         }
@@ -64,7 +78,14 @@ router
     .delete(async (req, res) => {
         let id = req.params.attractionId;
         try {
-        } catch (error) {}
+            id = await helperFunc.execValdnAndTrim(id, "Attraction ID");
+            if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
+            const attractionDeleted = await attractionData.deleteAttraction(id, req.session.userId);
+            if (attractionDeleted) return res.redirect("/users/userProfile");
+            else throw { statusCode: 500, message: "Some error occured. Try again later" };
+        } catch (error) {
+            return res.status(error.statusCode).render("error", { title: "Error", message: error.message });
+        }
     });
 
 module.exports = router;
