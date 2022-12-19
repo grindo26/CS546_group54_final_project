@@ -2,7 +2,7 @@ const helperFunc = require("../helpers");
 const mongoCollections = require("../config/mongoCollections");
 const { ObjectId } = require("mongodb");
 
-const createCity = async (name, state, country, attractions, num_attractions, num_reviews) => {
+const createCity = async (name, state, country, attractions, num_attractions) => {
     const cityCollection = await mongoCollections.cities();
     //validate and update all params
     name = await helperFunc.execValdnAndTrim(name, "name");
@@ -18,8 +18,7 @@ const createCity = async (name, state, country, attractions, num_attractions, nu
         state: state,
         country: country,
         attractions: [],
-        num_attractions: num_attractions,
-        num_reviews: num_reviews,
+        num_attractions: 0,
     };
 
     const insertInfo = await cityCollection.insertOne(newCity);
@@ -83,6 +82,10 @@ const incrReviewCountInCityStats = async (cityId, incrField) => {
     cityId = await helperFunc.execValdnAndTrim(cityId, "CityId");
     if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
     const cityCollection = await mongoCollections.cities();
+    let cityObj = await getCityById(cityId);
+    if (!cityObj || cityObj === null || cityObj === undefined) {
+        throw { statusCode: 404, message: "No city exists for this CityId" };
+    }
     const updatedInfo = await cityCollection.updateOne({ _id: ObjectId(cityId) }, { $inc: { [incrField]: 1 } });
     if (updatedInfo.modifiedCount === 0) {
         throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
@@ -95,10 +98,34 @@ const addAttractionInCity = async (cityId, attractionId) => {
     if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
     attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
     if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    let cityObj = await getCityById(cityId);
+    if (!cityObj || cityObj === null || cityObj === undefined) {
+        throw { statusCode: 404, message: "No city exists for this CityId" };
+    }
     const cityCollection = await mongoCollections.cities();
     const updatedInfo = await cityCollection.updateOne(
         { _id: ObjectId(cityId) },
         { $inc: { num_attractions: 1 }, $push: { attractions: attractionId } }
+    );
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
+const deleteAttractionFromCity = async (cityId, attractionId) => {
+    cityId = await helperFunc.execValdnAndTrim(cityId, "CityId");
+    if (!ObjectId.isValid(cityId)) throw { statusCode: 400, message: "CityId is not a valid ObjectId" };
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    let cityObj = await getCityById(cityId);
+    if (!cityObj || cityObj === null || cityObj === undefined) {
+        throw { statusCode: 404, message: "No city exists for this CityId" };
+    }
+    const cityCollection = await mongoCollections.cities();
+    const updatedInfo = await cityCollection.updateOne(
+        { _id: ObjectId(cityId) },
+        { $inc: { num_attractions: -1 }, $pull: { attractions: attractionId } }
     );
     if (updatedInfo.modifiedCount === 0) {
         throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
@@ -113,4 +140,5 @@ module.exports = {
     getAllCities,
     incrReviewCountInCityStats,
     addAttractionInCity,
+    deleteAttractionFromCity,
 };

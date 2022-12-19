@@ -12,6 +12,7 @@ const mongodb = require("mongodb");
 const router = express.Router();
 const mongoClient = mongodb.MongoClient;
 const fs = require("fs");
+var locationPicker = require("location-picker");
 
 app.use(express.json());
 app.use("/public", static);
