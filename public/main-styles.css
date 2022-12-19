@@ -85,10 +85,6 @@ dl{
     margin: 10px;
   }
   
-  #filter {
-    background-color: #ccc;
-    padding: 10px;
-  }
   
   .attrContent {
     padding: 10px;
@@ -362,4 +358,32 @@ dl{
   color: white;
   font-weight: bolder;
   font-size: large;
+}
+
+.header-user {
+  padding: 20px;
+  text-align: center;
+  background: #1a46c9;
+  color: white;
+  font-size: 20px;
+}
+
+.header-user h2{
+  color: white;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.two-box{
+  margin: 10px;
+  padding: 20px;
+}
+
+#filter, #sort{
+  padding-left: 10px;
+  margin-top: -5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  background-color: #ebebeb;
 }

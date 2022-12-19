@@ -2,17 +2,31 @@ const helperFunc = require("../helpers");
 const mongoCollections = require("../config/mongoCollections");
 const { ObjectId } = require("mongodb");
 const citiesData = require("../data/cities");
+const usersDataCode = require("../data/users");
 
-const createAttraction = async (name, cityId, reviews, rating, price, photo, location, tags = []) => {
+const updateOverallRating_add = async (p_numOvrRating, p_numRating, p_numElements) => {
+    p_returnOvrRating = parseFloat((p_numOvrRating + (p_numRating - p_numOvrRating) / p_numElements).toFixed(1));
+    return p_returnOvrRating;
+};
+
+const updateOverallRating_remove = async (p_numOvrRating, p_numRating, p_numElements) => {
+    p_returnOvrRating = parseFloat(((p_numOvrRating * (p_numElements + 1) - p_numRating) / p_numElements).toFixed(1));
+    return p_returnOvrRating;
+};
+
+const createAttraction = async (name, cityId, reviews, rating, price, photo, location, tags = [], userId) => {
     const attrCollection = await mongoCollections.attractions();
     //validate and update all params
     name = await helperFunc.execValdnAndTrim(name, "name");
     cityId = await helperFunc.execValdnAndTrim(cityId, "cityId");
+    userId = await helperFunc.execValdnAndTrim(userId, "userId");
+    if (!ObjectId.isValid(userId)) {
+        throw { statusCode: 400, message: "UserId is not valid" };
+    }
     reviews = [];
     rating = 0;
     price = await helperFunc.execValdnAndTrim(price, "price");
     await helperFunc.validatePriceRange(price);
-    photo = await helperFunc.execValdnAndTrim(photo, "photo");
     // location = await helperFunc.execValdnAndTrim(location, "location");
     if (tags.length != 0) {
         await helperFunc.execValdnForArr(tags, "tags");
@@ -29,6 +43,7 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
         photo: imageBuffer,
         location: location,
         tags: tags,
+        creatorId: userId,
     };
 
     const insertInfo = await attrCollection.insertOne(newAttraction);
@@ -39,9 +54,11 @@ const createAttraction = async (name, cityId, reviews, rating, price, photo, loc
     const returnObj = Object.assign({ _id: newId }, newAttraction);
     //Now also update num_attractions in city page.
     const updateAttrRes = await citiesData.addAttractionInCity(cityId, returnObj._id);
-    if (updateAttrRes) {
+    const userUpdateRes = await usersDataCode.addAttractionIntoUsers(returnObj._id, userId);
+    console.log(userUpdateRes);
+    if (updateAttrRes && userUpdateRes) {
         return returnObj;
-    }
+    } else throw { statusCode: 500, message: "Some error occurred. Try again later" };
 };
 
 const getAllAttraction = async (cityId) => {
@@ -85,22 +102,95 @@ const getPopularAttractions = async (num_attractions) => {
 };
 
 const getAttractionsfromAttractionIdArr = async (attrIdArr) => {
-    
-    const arr=[];
-    for(i=0; i<attrIdArr.length;i++){
-      let b = ObjectId(attrIdArr[i])
-      arr.push(b)
-   }
+    const arr = [];
+    for (i = 0; i < attrIdArr.length; i++) {
+        let b = ObjectId(attrIdArr[i]);
+        arr.push(b);
+    }
 
-   const attractionsCollection = await mongoCollections.attractions();
-   const attractionsArr = await attractionsCollection.find({ _id: {$in: arr}},{projection: {_id: 1, name:1}}).toArray();
-   return attractionsArr;
-}
+    const attractionsCollection = await mongoCollections.attractions();
+    const attractionsArr = await attractionsCollection.find({ _id: { $in: arr } }, { projection: { _id: 1, name: 1 } }).toArray();
+    return attractionsArr;
+};
+
+const deleteAttraction = async (id, userId) => {
+    id = await helperFunc.execValdnAndTrim(id, "Attraction ID");
+    if (!ObjectId.isValid(id)) throw { statusCode: 400, message: "Attraction id provided is not a valid id." };
+    const attractionCollection = await mongoCollections.attractions();
+    const attractionObj = await getAttractionById(id);
+    const cityId = attractionObj.cityId;
+    if (attractionObj.reviews.length > 0) {
+        throw { statusCode: 400, message: "Cannot delete this attraction. People have reviewed this attraction so you can't delete it." };
+    }
+    if (attractionObj.creatorId != userId) {
+        throw { statusCode: 400, message: "Cannot delete this attraction. You are not the creator" };
+    }
+    const attractionRemovedFromCity = await citiesData.deleteAttractionFromCity(cityId, id);
+    const attractionRemovedFromUsers = await usersDataCode.deleteAttractionFromUsers(cityId, userId);
+    if (attractionRemovedFromCity && attractionRemovedFromUsers) {
+        const deletionInfo = await attractionCollection.deleteOne({ _id: ObjectId(id) });
+        if (deletionInfo.deletedCount === 0) {
+            throw { statusCode: 500, message: `Could not delete attraction with id: ${id}` };
+        }
+        return true;
+    } else throw { statusCode: 500, message: "Some error occured. Try again later" };
+};
+
+const addReviewInAttractions = async (attractionId, reviewId, rating) => {
+    reviewId = await helperFunc.execValdnAndTrim(reviewId, "reviewId");
+    if (!ObjectId.isValid(reviewId)) throw { statusCode: 400, message: "reviewId is not a valid ObjectId" };
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    const attractionCollection = await mongoCollections.attractions();
+    let l_objAttraction = await getAttractionById(attractionId);
+    if (!l_objAttraction || l_objAttraction === null || l_objAttraction === undefined) {
+        throw { statusCode: 404, message: `No attraction exists with that id` };
+    }
+    let overallRating = await updateOverallRating_add(l_objAttraction.rating, rating, l_objAttraction.reviews.length + 1);
+    let updateAttractionObj = {
+        rating: overallRating,
+    };
+    const updatedInfo = await attractionCollection.updateOne(
+        { _id: ObjectId(attractionId) },
+        { $push: { reviews: reviewId }, $set: updateAttractionObj }
+    );
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
+
+const removeReviewFromAttractions = async (attractionId, reviewId, rating) => {
+    reviewId = await helperFunc.execValdnAndTrim(reviewId, "reviewId");
+    if (!ObjectId.isValid(reviewId)) throw { statusCode: 400, message: "reviewId is not a valid ObjectId" };
+    attractionId = await helperFunc.execValdnAndTrim(attractionId, "attractionId");
+    if (!ObjectId.isValid(attractionId)) throw { statusCode: 400, message: "attractionId is not a valid ObjectId" };
+    const attractionCollection = await mongoCollections.attractions();
+    let l_objAttraction = await getAttractionById(attractionId);
+    if (!l_objAttraction || l_objAttraction === null || l_objAttraction === undefined) {
+        throw { statusCode: 404, message: `No attraction exists with that id` };
+    }
+    let overallRating = await updateOverallRating_remove(l_objAttraction.rating, rating, l_objAttraction.reviews.length - 1);
+    let updateAttractionObj = {
+        rating: overallRating,
+    };
+    const updatedInfo = await attractionCollection.updateOne(
+        { _id: ObjectId(attractionId) },
+        { $pull: { reviews: reviewId }, $set: updateAttractionObj }
+    );
+    if (updatedInfo.modifiedCount === 0) {
+        throw { statusCode: 500, message: `An error occurred while updating the city for this operation. Try again later` };
+    }
+    return true;
+};
 
 module.exports = {
     createAttraction,
     getAllAttraction,
     getAttractionById,
     getPopularAttractions,
-    getAttractionsfromAttractionIdArr
+    getAttractionsfromAttractionIdArr,
+    deleteAttraction,
+    addReviewInAttractions,
+    removeReviewFromAttractions,
 };

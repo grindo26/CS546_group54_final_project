@@ -1,5 +1,8 @@
 <title>{{title}}</title>
 <h1>{{list1.name}}</h1>
+<p>{{list1.state}}</p>
+<p>{{list1.country}}</p>
+<p>{{list1.num_attractions}}</p>
 
 <select id="filter">
   <option value="all">All</option>
@@ -19,20 +22,74 @@
 
 
 <div class="content">
+  {{#if list2}}
       {{#each list2}}
-      <li><a id="a"  class="nameli" href="/attractions/{{this._id}}">{{this.name}}</a></li>
+      <li><a id="a"  class="nameli" href="/attractions/{{this.cityId}}">{{this.name}}</a></li>
        <li class="priceli">{{this.price}}</li>
        <li class="ratingli">{{this.rating}}</li>
        <li class="tagli">{{this.tags}}</li>
        <br>
       {{/each}}
+      {{else}}
+    {{/if}}
 </div>
-
-<div class="content2">
-  <ul id="results"></ul>
+<div class="container">
+    <div class="row">
+        <div class="col two-box" style="padding-top: 50px;">
+            <h2 class="text-center">Attractions :</h2>
+            <div class="divider div-transparent"></div>
+            <div class="container">
+                <span class="d-flex justify-content-center" style="padding :20px;">
+                    <p style="display:inline">Filter : </p>
+                    <select id="filter" class="form-select" >
+                        <option value="all">All</option>
+                        <option value="names">Names</option>
+                        <option value="$">$</option>
+                        <option value="$$">$$ </option>
+                        <option value="$$$">$$$ </option>
+                        <option value="tags">Indoor Activity </option>
+                        <option value="tags2">Outdoor Activity </option>
+                        <option value="tags3">Parks</option>
+                        <option value="tags4">Monument</option>
+                    </select>
+                </span>
+            </div>
+            <div class="container">
+                <span class="d-flex justify-content-center" style="padding :20px;">
+                    <p style="display:inline">Sort : </p>
+                    <select id="sort" class="form-select">
+                        <option value="A-Z">Sort A-Z</option>
+                        <option value="Z-A">Sort Z-A</option>
+                        <option value="rating">Sort by Rating</option>
+                    </select>
+            </div>
+            </span>
+        </div>
+        <div class="col two-box">
+            <div class="content">
+                {{#each list2}}
+                <div class="card" style="width: 18rem; margin:10px; margin-bottom:20px;">
+                    <div class="card-header">
+                        <a id="a"  class="nameli" href="/attractions/{{this._id}}">{{this.name}}</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="priceli list-group-item"> Price : {{this.price}}</li>
+                        <li class="ratingli list-group-item">Rating : {{this.rating}}</li>
+                        <li class="tagli list-group-item"> Tags : {{this.tags}}</li>
+                    </ul>
+                </div>
+                {{/each}}
+            </div>
+             <div class="col two-box">
+            <div class="card content2" style="width: 18rem; margin:10px; margin-bottom:20px;">
+                <ul id="results" class="list-group list-group-flush"><li class="list-group-item"></li></ul>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
+<p>{{message}}</p>
 
 {{!-- <script src="../public/main.js"></script> --}}
 <script src="/public/main.js"></script>
+

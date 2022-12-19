@@ -8,6 +8,9 @@ const searchRoutes = require("./search");
 const homeRoutes = require("./home");
 const logoutRoutes = require("./logout");
 
+const xss = require('xss');
+const commentRoutes = require("./comments");
+
 const constructorMethod = (app) => {
     app.use("/", homeRoutes);
     app.use("/signUp", signUpRoutes);
@@ -18,6 +21,7 @@ const constructorMethod = (app) => {
     app.use("/attractions", attractionsRoutes);
     app.use("/search", searchRoutes);
     app.use("/logout", logoutRoutes);
+    app.use("/comments", commentRoutes);
     app.use("*", (req, res) => {
         return res.sendStatus(404);
     });
